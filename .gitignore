@@ -1,6 +1,5 @@
-project-toolkit-sept-2017.pdf
 env/
 *.pyc
 __pycache__
 .DS_Store
-elonmusk_user_tweets.xlsx
+data/elonmusk_user_tweets.xlsx
