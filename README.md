@@ -53,7 +53,7 @@ Users can create and log into accouts to save generated Tweets to their 'favorit
 #### 3.0
 
 - Allow users to search for any public Twitter 
-- Login in / create account with Twitter?
+- Login in / [create account with Twitter](https://developer.twitter.com/en/docs/authentication/overview)
 - Allow users to select second pre-filled funky text to create mashup generated tweet
 - Ability to download favorited Tweets in a CSV file 
 - Add tour tips? 
