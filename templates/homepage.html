@@ -4,21 +4,38 @@
 
 {% block body%}
 
-<h1>What Would Elon Musk Say? Generate a Pseudo Tweet and Find Out!</h1>
+<h1>Wondering what Elon Musk would say? Generate a pseudo Tweet and find out!</h1>
 
-<form>
-	<div>
-		<input
-			type="text" name="first-name" id="first-name"
-			placeholder="first name" required />
-	</div>
-	<div>
-		<input type="text" name="email" id="email" placeholder="email" required />
-	</div>
-	<div>
-		<input type="password" name="password" id="password" required />
-	</div>
-	<button type="submit">Continue</button>
-</form>
+<!-- Login or create an account widget  -->
+<div class="account-widget">
+
+  <h2>Welcome to Imposter Elon</h2>
+  <p>Sign up to generate Tweets</p>
+
+  <form>
+    <div>
+      <input
+        type="text" name="first-name" id="first-name"
+        placeholder="first name" required />
+    </div>
+    <div>
+      <input type="text" name="email" id="email" placeholder="email" required />
+    </div>
+    <div>
+      <input type="password" name="password" id="password"
+      placeholder="password" required />
+    </div>
+    <button type="submit">Continue</button>
+  </form>
+
+  <p>OR</p>
+
+  <button type="submit">Demo User</button>
+
+  <p>By continuing you agree to Imposter Elon's Terms of Service</p>
+
+  Already a member? Log In
+
+</div>
 
 {% endblock %}
