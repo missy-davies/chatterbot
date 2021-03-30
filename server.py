@@ -1,4 +1,4 @@
-"""Server for Markov chains Tweet generator"""
+"""Server for Markov chains Tweet generator app"""
 
 from flask import Flask, render_template, request, flash, session, redirect
 
@@ -11,15 +11,16 @@ app.secret_key = 'TEMPORARYKEY'
 
 @app.route('/')
 def show_homepage():
-    """Display landing page"""
+    """Display landing page."""
 
     return render_template('homepage.html')
 
 
-# @app.route('/log-in')
+# TODO: Create 'login' route 
+# @app.route('/login')
 
 
-
+# TODO: Create 'create account' route
 # @app.route('/create-account')
 
 
