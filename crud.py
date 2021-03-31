@@ -13,7 +13,7 @@ def create_user(fname, email, password):
     return user 
 
 # TODO: test the all crud functions below this point
-def create_musk_tweets(text):
+def create_musk_tweet(text):
     """Create and return an original Tweet from Elon Musk"""
 
     musk_tweet = Musk_Tweet(text=text)
