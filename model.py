@@ -14,14 +14,14 @@ class User(db.Model):
     user_id = db.Column(db.Integer,
                    primary_key=True,
                    autoincrement=True)
-    first_name = db.Column(db.String(20), nullable=False)
+    fname = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String, nullable=False, unique=True)
     password = db.Column(db.String, nullable=False)
 
     def __repr__(self):
         """Show info about user"""
 
-        return f'<User user_id={self.user_id} first_name={self.first_name} email={self.email}'
+        return f'<User user_id={self.user_id} fname={self.fname} email={self.email}'
 
 
 class Musk_Tweet(db.Model):
@@ -68,12 +68,13 @@ class Fav_Tweet(db.Model):
                              autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     ug_tweet_id = db.Column(db.Integer, db.ForeignKey('ug_tweets.ug_tweet_id'))
-
+    
+   
 
     def __repr__(self):
         """Show info about a favorited user generated Markov chain Tweet"""
 
-        return f'<Fav_Tweet fav_tweet_id={self.fav_tweet_id} text={self.ug_tweet_id.text}>'
+        return f'<Fav_Tweet fav_tweet_id={self.fav_tweet_id}>'
 
 
 # FIXME: Need to change database name here 
