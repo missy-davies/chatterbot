@@ -68,7 +68,6 @@ class Fav_Tweet(db.Model):
                              autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     ug_tweet_id = db.Column(db.Integer, db.ForeignKey('ug_tweets.ug_tweet_id'))
-    
    
 
     def __repr__(self):
