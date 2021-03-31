@@ -76,7 +76,7 @@ class Fav_Tweet(db.Model):
         return f'<Fav_Tweet fav_tweet_id={self.fav_tweet_id}>'
 
 
-# FIXME: Need to change database name here 
+# FIXME: May need to change database name here 
 def connect_to_db(flask_app, db_uri='postgresql:///tweetgenerator', echo=True):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     flask_app.config['SQLALCHEMY_ECHO'] = echo

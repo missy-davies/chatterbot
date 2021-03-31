@@ -12,7 +12,7 @@ def create_user(fname, email, password):
 
     return user 
 
-# TODO: test the all crud functions below this point
+
 def create_musk_tweet(text):
     """Create and return an original Tweet from Elon Musk"""
 
@@ -33,6 +33,7 @@ def create_ug_tweet(user_id, fav_status, text):
     db.session.commit()
 
     return ug_tweet
+
 
 def create_fav_tweet(user_id, ug_tweet_id):
     """Create and return a favorited user generated Markov Tweet"""
