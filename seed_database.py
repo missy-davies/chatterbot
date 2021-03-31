@@ -54,6 +54,7 @@ words = ['Doggo', 'ipsum', 'fluffer', 'noodle', 'horse', 'blep', 'most',
          'lotsa', 'pats']
 
 # create 10 users, each of whom has 10 random Tweets generated from Doggo Ipsum
+
 for name in names:
     email = f'{name.lower()}@libero.it'
     password = f'supersafe{name.lower()[0]}{names.index(name)}'
@@ -68,5 +69,4 @@ for name in names:
 
         str_tweet = (" ").join(new_tweet).capitalize()
 
-        ug_tweet = crud.create_ug_tweet(user, False, str_tweet)
-        # TODO: Seeding database isn't working properly yet
+        ug_tweet = crud.create_ug_tweet(user.user_id, False, str_tweet)

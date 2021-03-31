@@ -21,7 +21,7 @@ class User(db.Model):
     def __repr__(self):
         """Show info about user"""
 
-        return f'<User user_id={self.user_id} fname={self.fname} email={self.email}'
+        return f'<User user_id={self.user_id} fname={self.fname} email={self.email}>'
 
 
 class Musk_Tweet(db.Model):
