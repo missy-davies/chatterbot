@@ -15,11 +15,12 @@ app.secret_key = 'TEMPORARYKEY'
 
 @app.route('/')
 def show_homepage():
-    """Display landing page."""
+    """Display landing page with create account details."""
+    
+    # TODO: leave for later - check if user is in session, then bounce to login form or create account
+    # user = crud.get_user_by_email(email)
 
-    # TODO: check if user is in session, then bounce to login form or create account
-
-    return render_template('homepage.html')
+    return render_template('create-account.html')
 
 # TODO: Following routes need to check if user is in session, if they're not 
 # then they should redirect to '/'
@@ -44,24 +45,29 @@ def register_user():
         return redirect('/')
    
 
-@app.route('/user-login', methods=['POST'])
-def log_user_in():
-    """Logs user into their account."""
+# @app.route('/log-in')
+# def 
 
-    user = crud.get_user_by_email(request.form['email'])
+#     return render_template('log-in.html')
 
-    password = request.form['password']
+# @app.route('/user-login', methods=['POST'])
+# def log_user_in():
+#     """Logs user into their account."""
 
-    if user == None:
-        flash('''Oops, we couldn't find an account under that email address. 
-                Please create a new account and try again!''')
-    elif password != user.password:
-        flash('Incorrect password. Please try again.')
-    else:
-        flash('Logged in!')
-        session['user-id'] = user.user_id
+#     user = crud.get_user_by_email(request.form['email'])
 
-    return redirect('/generate')
+#     password = request.form['password']
+
+#     if user == None:
+#         flash('''Oops, we couldn't find an account under that email address. 
+#                 Please create a new account and try again!''')
+#     elif password != user.password:
+#         flash('Incorrect password. Please try again.')
+#     else:
+#         flash('Logged in!')
+#         session['user-id'] = user.user_id
+
+#     return redirect('/generate')
     
 
 # TODO: Create route for user to log into account. Use dom manipulation to switch form. 

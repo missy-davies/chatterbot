@@ -3,3 +3,4 @@ env/
 __pycache__
 .DS_Store
 data/elonmusk_user_tweets.xlsx
+secrets.sh

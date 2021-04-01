@@ -1,6 +1,6 @@
 """CRUD operations"""
 
-from model import db, User, Musk_Tweet, UG_Tweet, Fav_Tweet, connect_to_db
+from model import db, User, Musk_Tweet, UG_Tweet, connect_to_db
 
 def create_user(fname, email, password):
     """Create and return a new user"""
@@ -39,17 +39,6 @@ def create_ug_tweet(user_id, fav_status, text):
     db.session.commit()
 
     return ug_tweet
-
-
-def create_fav_tweet(user_id, ug_tweet_id):
-    """Create and return a favorited user generated Markov Tweet"""
-
-    fav_tweet = Fav_Tweet(user_id=user_id, ug_tweet_id=ug_tweet_id)
-
-    db.session.add(fav_tweet)
-    db.session.commit()
-
-    return fav_tweet
 
 
 if __name__ == '__main__':
