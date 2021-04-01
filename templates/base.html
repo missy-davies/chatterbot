@@ -9,9 +9,15 @@
 	</head>
 
 	<body>
-		{% block body %}
-    {% endblock %}
-		<!-- TODO: Javscript script tag to be added here-->
+		<!-- TODO: Maybe move these flashed messages later -->
+		{% for msg in get_flashed_messages() %}
+      <p class="flash-msg">
+        {{ msg }}
+      </p>
+    {% endfor %}
+
+		{% block body %}{% endblock %}
+		<script src="/static/helloWorld.js"></script>
 	</body>
 
 	<footer>

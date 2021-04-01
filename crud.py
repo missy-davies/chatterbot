@@ -13,6 +13,12 @@ def create_user(fname, email, password):
     return user 
 
 
+def get_user_by_email(email):
+    """Return a user object by email."""
+
+    return User.query.filter(User.email == email).first()
+
+
 def create_musk_tweet(text):
     """Create and return an original Tweet from Elon Musk"""
 
