@@ -3,13 +3,15 @@
 	<head>
 		<meta charset="utf-8" />
     <link href="/static/css/style.css" rel="stylesheet">
-		<title>{% block title %}{% endblock %}</title>
-		<!-- TODO: JQuery script to be added here -->
-		
+		<script src="https://code.jquery.com/jquery-3.6.0.js" 
+						integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" 
+						crossorigin="anonymous">
+		</script>
+		<title>{% block title %}{% endblock %}</title>		
 	</head>
 
 	<body>
-		<!-- TODO: Maybe move these flashed messages later -->
+		<!-- TODO: Maybe move these flashed messages to a better place -->
 		{% for msg in get_flashed_messages() %}
       <p class="flash-msg">
         {{ msg }}
@@ -17,7 +19,7 @@
     {% endfor %}
 
 		{% block body %}{% endblock %}
-		<script src="/static/helloWorld.js"></script>
+		<script src="/static/js/tweet-generator.js"></script>
 	</body>
 
 	<footer>

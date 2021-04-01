@@ -17,17 +17,15 @@ app.secret_key = 'TEMPORARYKEY'
 def show_homepage():
     """Display landing page."""
 
+    # TODO: check if user is in session, then bounce to login form or create account
+
     return render_template('homepage.html')
 
-
-@app.route('/generate')
-def show_tweet_generator():
-    """Show tweet generator page and generate new tweets"""
-
-    return render_template('generate.html')
+# TODO: Following routes need to check if user is in session, if they're not 
+# then they should redirect to '/'
 
 
-@app.route('/generate', methods=['POST'])
+@app.route('/', methods=['POST'])
 def register_user():
     """Create a new user."""
 
@@ -38,11 +36,13 @@ def register_user():
     user = crud.get_user_by_email(email)
     if user:
         flash('Oops, looks like an account already exists with that email! Please log in.')
+        return redirect('/user-login')
     else:
         crud.create_user(fname, email, password)
+        # TODO: add user to session!  
         flash("Hooray! You're all signed up. Go ahead and log in.")
-
-    return redirect('/')
+        return redirect('/')
+   
 
 @app.route('/user-login', methods=['POST'])
 def log_user_in():
@@ -65,6 +65,13 @@ def log_user_in():
     
 
 # TODO: Create route for user to log into account. Use dom manipulation to switch form. 
+
+@app.route('/generate')
+def show_tweet_generator():
+    """Show tweet generator page and generate new tweets"""
+
+    return render_template('generate.html')
+
 
 @app.route('/favorites')
 def show_favorites():
