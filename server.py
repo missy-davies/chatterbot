@@ -10,6 +10,9 @@ from model import connect_to_db, User
 
 import crud
 
+from markovchain import JsonStorage
+from markovchain.text import MarkovText, ReplyMode
+
 
 app = Flask(__name__)
 app.secret_key = 'TEMPORARYKEY'
@@ -59,6 +62,8 @@ def create_account():
 def show_login():
     """Display landing page with login to existing account details"""
     
+    # TODO: Add email and password criteria to ensure email is real and password meets requirements 
+
     if current_user.is_authenticated:
         return redirect('/generate')
     else: 
@@ -91,6 +96,16 @@ def show_tweet_generator():
     """Show tweet generator page and generate new tweets"""
 
     return render_template('generate.html')
+
+
+@app.route('/markov')
+def generate_markov_tweet(filename):
+    """Generate markov tweet from static file"""
+
+
+
+# TODO: add function that when we hit that route invokes markov chain stuff 
+# whatever generates, gets sent to the front end 
 
 
 @app.route('/favorites')
