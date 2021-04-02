@@ -20,6 +20,31 @@ class User(db.Model):
 
     tweets = db.relationship('UG_Tweet')
 
+    # Methods for Flask Login 
+    def is_authenticated(self):
+        """Return True if user is authenticated"""
+
+        return True
+
+
+    def is_active(self):  
+        """Return True if user is active""" 
+
+        return True           
+
+
+    def is_anonymous(self):
+        """Return True if user is anonymous. Real users should return False"""
+
+        return False          
+
+
+    def get_id(self):
+        """Return unique user id"""
+
+        return str(self.user_id)
+
+
     def __repr__(self):
         """Show info about user"""
 

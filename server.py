@@ -2,9 +2,11 @@
 
 from flask import Flask, render_template, request, flash, session, redirect
 
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+
 import jinja2
 
-from model import connect_to_db
+from model import connect_to_db, User
 
 import crud
 
@@ -12,14 +14,26 @@ import crud
 app = Flask(__name__)
 app.secret_key = 'TEMPORARYKEY'
 
+# Configurations to use Flask Login
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    """Reload the user object from the user_id stored in the session"""
+    
+    return User.query.get(int(user_id))
+
 
 @app.route('/')
 def show_create_account():
     """Display landing page with create new account details"""
 
-    if session['current_user']:
+    if current_user.is_authenticated:
         return redirect('/generate')
-    else:
+    else: 
         return render_template('create-account.html')
 
 
@@ -45,9 +59,9 @@ def create_account():
 def show_login():
     """Display landing page with login to existing account details"""
     
-    if session['current_user']:
+    if current_user.is_authenticated:
         return redirect('/generate')
-    else:
+    else: 
         return render_template('login.html')
 
 
@@ -67,26 +81,33 @@ def login():
         return redirect('/login')
     else:
         flash(f'Logged in as {user.fname}!')
-        session['current_user'] = user.user_id
+        login_user(user)
         return redirect('/generate')
 
 
 @app.route('/generate')
+@login_required
 def show_tweet_generator():
     """Show tweet generator page and generate new tweets"""
-
-    # TODO: Check if user is in session, if not then redirect to home 
 
     return render_template('generate.html')
 
 
 @app.route('/favorites')
+@login_required
 def show_favorites():
     """Display favorite generated tweets"""
 
-    # TODO: Check if user is in session, if not then redirect to home 
-
     return render_template('favorites.html')
+
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+
+    flash(f'See you later!')
+    return redirect('/login')
 
 
 if __name__ == "__main__":
