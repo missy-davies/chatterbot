@@ -14,7 +14,7 @@ def create_user(fname, email, password):
 
 
 def get_user_by_email(email):
-    """Return a user object by email."""
+    """Return a user object by email"""
 
     return User.query.filter(User.email == email).first()
 
@@ -30,10 +30,10 @@ def create_musk_tweet(text):
     return musk_tweet
 
 
-def create_ug_tweet(user_id, fav_status, text):
+def create_ug_tweet(user, fav_status, text):
     """Create and return a user generated Markov Tweet"""
 
-    ug_tweet = UG_Tweet(user_id=user_id, fav_status=fav_status, text=text)
+    ug_tweet = UG_Tweet(user=user, fav_status=fav_status, text=text)
 
     db.session.add(ug_tweet)
     db.session.commit()

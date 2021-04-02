@@ -69,4 +69,4 @@ for name in names:
 
         str_tweet = (" ").join(new_tweet).capitalize()
 
-        ug_tweet = crud.create_ug_tweet(user.user_id, False, str_tweet)
+        ug_tweet = crud.create_ug_tweet(user, False, str_tweet)
