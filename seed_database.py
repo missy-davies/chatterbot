@@ -1,7 +1,9 @@
 """Script to seed database"""
 
 import os
+import sys 
 import json
+import requests 
 from random import choice
 
 import crud
@@ -14,17 +16,36 @@ os.system('createdb tweetgenerator')
 model.connect_to_db(server.app)
 model.db.create_all()
 
-# FIXME: This is loading a small sample of a few Elon Musk Tweets, 
-# I'll need to change to the full file later
-with open('data/sample_elon_musk_tweets.json') as f:
-    musk_data = json.loads(f.read())
 
-musk_tweets_in_db = []
-for musk_tweet in musk_data['tweets']:
-    text = musk_tweet['Text']
+# TWITTER API CODE GOES HERE 
 
-    db_musk_tweet = crud.create_musk_tweet(text)
-    musk_tweets_in_db.append(db_musk_tweet)
+def auth():
+    """Get Twitter Bearer token"""
+
+    return os.environ.get("BEARER_TOKEN")
+
+def create_url():
+    """Build URL to query Twitter API for the text from a user's Tweets"""
+
+    query = "from:missy_davies_ -is:text"
+ 
+    tweet_fields = "tweet.fields=text"
+    url = f"https://api.twitter.com/2/tweets/search/recent?query={query}&{tweet_fields}"
+
+    return url
+
+
+# FIXME: This is the code to load a small sample of a few Elon Musk Tweets, 
+# I'll need to replace with seeding from the Twitter API 
+# with open('data/sample_elon_musk_tweets.json') as f:
+#     musk_data = json.loads(f.read())
+
+# musk_tweets_in_db = []
+# for musk_tweet in musk_data['tweets']:
+#     text = musk_tweet['Text']
+
+#     db_musk_tweet = crud.create_musk_tweet(text)
+#     musk_tweets_in_db.append(db_musk_tweet)
 
 
 # Random names and words to create users and demo texts out of

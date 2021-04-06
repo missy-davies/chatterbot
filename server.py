@@ -1,20 +1,20 @@
 """Server for Markov chains Tweet generator app"""
 
 from flask import Flask, render_template, request, flash, session, redirect
-
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
-
 import jinja2
 
 from model import connect_to_db, User
-
 import crud
 
 from markovchain.text import MarkovText
 
+import os
+import sys 
+
 
 app = Flask(__name__)
-app.secret_key = 'TEMPORARYKEY'
+app.secret_key = os.environ.get("FLASK_SERVER_KEY")
 
 # Configurations to use Flask Login
 login_manager = LoginManager()
@@ -98,7 +98,6 @@ def show_tweet_generator():
     return render_template('generate.html')
 
 
-# TODO: Can this be a standalone helper function here? Does it need to be inside a route? 
 def clean_tweet(line):
     """Clean a Tweet by removing retweets, mentions, links, and other random symbols"""
 
@@ -106,6 +105,8 @@ def clean_tweet(line):
     new_line_arr = []
     
     # FIXME: This may be inefficient and slow the program. May need to refactor later
+    # Move this to the seed_database file so that the database has cleaned data to generate tweets
+    # use this to check date of last fetch on Tweets too 
     for word in old_line_arr:
 
         # remove retweets and mentions, links, and random symbols
