@@ -10,8 +10,7 @@ from model import connect_to_db, User
 
 import crud
 
-from markovchain import JsonStorage
-from markovchain.text import MarkovText, ReplyMode
+from markovchain.text import MarkovText
 
 
 app = Flask(__name__)
@@ -62,7 +61,8 @@ def create_account():
 def show_login():
     """Display landing page with login to existing account details"""
     
-    # TODO: Add email and password criteria to ensure email is real and password meets requirements 
+    # TODO: Add email and password criteria to ensure email is real and 
+    # password meets requirements 
 
     if current_user.is_authenticated:
         return redirect('/generate')
@@ -98,14 +98,52 @@ def show_tweet_generator():
     return render_template('generate.html')
 
 
+# TODO: Can this be a standalone helper function here? Does it need to be inside a route? 
+def clean_tweet(line):
+    """Clean a Tweet by removing retweets, mentions, links, and other random symbols"""
+
+    old_line_arr = line.split(' ')
+    new_line_arr = []
+    
+    # FIXME: This may be inefficient and slow the program. May need to refactor later
+    for word in old_line_arr:
+
+        # remove retweets and mentions, links, and random symbols
+        if word != 'RT' and word != '"RT' and '@' not in word \
+                    and word[0:4] != 'http' \
+                    and 'www' not in word \
+                    and '.com' not in word \
+                    and word != ':' and word != '!' and word != '-' \
+                    and 'amp;' not in word:
+            
+            # remove trailing period 
+            if len(word) > 1:
+                if word[-1] == '.':
+                    word = word[0:-1]
+                    new_line_arr.append(word)
+                else: 
+                    new_line_arr.append(word)
+
+    return (' ').join(new_line_arr)
+
+
+# TODO: Will need to make this filename interact with the database and link to Twitter API 
 @app.route('/markov')
-def generate_markov_tweet(filename):
+def generate_markov(filename='data/elon_musk_tweets.txt'):
     """Generate markov tweet from static file"""
 
+    markov = MarkovText() 
 
+    with open(filename) as fp: 
+        
+        for line in fp:
+            new_line = clean_tweet(line)
+            markov.data(new_line)
 
-# TODO: add function that when we hit that route invokes markov chain stuff 
-# whatever generates, gets sent to the front end 
+    tweet = markov(max_length=40)
+    # there are 6.1 chars on average in a word, Twitter's char limit is 280, 
+    # so that makes for approx 45 words max in a tweet, rounding down to 40 for some margin
+    return tweet
 
 
 @app.route('/favorites')

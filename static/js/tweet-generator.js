@@ -1,11 +1,12 @@
 'use strict;';
 
-const generate = document.querySelector('#generate-tweet');
+// TODO: Fix this so it interacts properly with the server, gets the tweet and displays it
+// and maybe can speed up the first fetch somehow?
 
-generate.addEventListener('click', () => {
-	$.get('/route', (res) => {});
+$('#generate-tweet').on('click', () => {
+	const makeTweet = (apiData) => {
+		$('.tweets').append('<li>', apiData, '</li>');
+	};
 
-	document
-		.querySelector('.tweets')
-		.insertAdjacentHTML('beforeend', '<li>Tweet tweet!</li>');
+	$.get('/markov', makeTweet);
 });
