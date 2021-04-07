@@ -1,6 +1,6 @@
 """Server for Markov chains Tweet generator app"""
 
-from flask import Flask, render_template, request, flash, session, redirect
+from flask import Flask, render_template, request, flash, session, redirect, jsonify
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 import jinja2
 
@@ -143,7 +143,23 @@ def generate_markov():
     # so that makes for approx 45 words max in a tweet, rounding down to 40 for some margin
 
     crud.create_ug_tweet(user=current_user, fav_status=False, text=tweet)
+
+    # TODO: make sure this page redirects to the generate page so folks can't see it 
     return tweet
+
+
+@app.route('/get-tweets')
+def get_ug_tweets():
+    """Show all Markov Tweets a user has generated"""
+
+    tweets_text = []
+
+    for tweet in current_user.tweets:
+        tweets_text.append(tweet.text)
+
+    # TODO: make sure this page redirects to the generate page os folks can't see it 
+
+    return jsonify(tweets_text)
 
 
 @app.route('/favorites')
