@@ -10,6 +10,8 @@ import crud
 import model
 import server 
 
+import tweepy 
+
 os.system('dropdb tweetgenerator')
 os.system('createdb tweetgenerator')
 
@@ -17,35 +19,36 @@ model.connect_to_db(server.app)
 model.db.create_all()
 
 
-# TWITTER API CODE GOES HERE 
+# Seed database with Tweets using a Twitter API call with the Tweepy wrapper
+def twitter_auth():
+    """Authenticate Twitter API connection with secret keys"""
 
-def auth():
-    """Get Twitter Bearer token"""
+    consumer_key = os.environ['CONSUMER_KEY']
+    consumer_secret = os.environ['SECRET_KEY']
+    access_token = os.environ['ACCESS_TOKEN']
+    access_token_secret = os.environ['ACCESS_TOKEN_SECRET']
 
-    return os.environ.get("BEARER_TOKEN")
-
-def create_url():
-    """Build URL to query Twitter API for the text from a user's Tweets"""
-
-    query = "from:missy_davies_ -is:text"
- 
-    tweet_fields = "tweet.fields=text"
-    url = f"https://api.twitter.com/2/tweets/search/recent?query={query}&{tweet_fields}"
-
-    return url
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
+    
+    return auth
 
 
-# FIXME: This is the code to load a small sample of a few Elon Musk Tweets, 
-# I'll need to replace with seeding from the Twitter API 
-# with open('data/sample_elon_musk_tweets.json') as f:
-#     musk_data = json.loads(f.read())
+def get_twitter_client():
+    """Get Twitter client"""
 
-# musk_tweets_in_db = []
-# for musk_tweet in musk_data['tweets']:
-#     text = musk_tweet['Text']
+    auth = twitter_auth()
+    client = tweepy.API(auth, wait_on_rate_limit=True)
+    return client 
 
-#     db_musk_tweet = crud.create_musk_tweet(text)
-#     musk_tweets_in_db.append(db_musk_tweet)
+
+twitter_user = 'elonmusk' # select Twitter account to seed database with 
+client = get_twitter_client()
+
+for status in tweepy.Cursor(client.user_timeline, screen_name=twitter_user).items(10): # add a number inside the parenthesis of items to limit # of tweets
+    text = status.text
+
+    db_musk_tweet = crud.create_musk_tweet(text)
 
 
 # Random names and words to create users and demo texts out of
