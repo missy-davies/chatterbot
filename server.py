@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, flash, session, redirect
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 import jinja2
 
-from model import connect_to_db, User
+from model import connect_to_db, User, Musk_Tweet
 import crud
 
 from markovchain.text import MarkovText
@@ -128,18 +128,15 @@ def clean_tweet(line):
     return (' ').join(new_line_arr)
 
 
-# TODO: Will need to make this filename interact with the database and link to Twitter API 
 @app.route('/markov')
-def generate_markov(filename='data/elon_musk_tweets.txt'):
-    """Generate markov tweet from static file"""
+def generate_markov():
+    """Generate markov tweet using stored Tweets in database"""
 
     markov = MarkovText() 
 
-    with open(filename) as fp: 
-        
-        for line in fp:
-            new_line = clean_tweet(line)
-            markov.data(new_line)
+    for tweet_obj in Musk_Tweet.query.all():
+        new_tweet = clean_tweet(tweet_obj.text)
+        markov.data(new_tweet)
 
     tweet = markov(max_length=40)
     # there are 6.1 chars on average in a word, Twitter's char limit is 280, 
