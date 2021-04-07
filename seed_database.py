@@ -41,11 +41,11 @@ def get_twitter_client():
     client = tweepy.API(auth, wait_on_rate_limit=True)
     return client 
 
-
-twitter_user = 'elonmusk' # select Twitter account to seed database with 
+# TODO: select Twitter account and number of tweets to seed database 
+twitter_user = 'kimkardashian' 
 client = get_twitter_client()
 
-for status in tweepy.Cursor(client.user_timeline, screen_name=twitter_user).items(10): # add a number inside the parenthesis of items to limit # of tweets
+for status in tweepy.Cursor(client.user_timeline, screen_name=twitter_user).items(50): # add a number inside the parenthesis of items to limit # of tweets
     text = status.text
 
     db_musk_tweet = crud.create_musk_tweet(text)
