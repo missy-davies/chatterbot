@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, flash, session, redirect
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 import jinja2
 
-from model import connect_to_db, User, Musk_Tweet
+from model import connect_to_db, User, Musk_Tweet, UG_Tweet
 import crud
 
 from markovchain.text import MarkovText
@@ -141,6 +141,8 @@ def generate_markov():
     tweet = markov(max_length=40)
     # there are 6.1 chars on average in a word, Twitter's char limit is 280, 
     # so that makes for approx 45 words max in a tweet, rounding down to 40 for some margin
+
+    crud.create_ug_tweet(user=current_user, fav_status=False, text=tweet)
     return tweet
 
 
