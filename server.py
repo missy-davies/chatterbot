@@ -157,7 +157,7 @@ def get_ug_tweets():
     for tweet in current_user.tweets:
         tweets_text.append(tweet.text)
 
-    # TODO: make sure this page redirects to the generate page os folks can't see it 
+    # TODO: make sure this page redirects to the generate page so folks can't see it 
 
     return jsonify(tweets_text)
 
