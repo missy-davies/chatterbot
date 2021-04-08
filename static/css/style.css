@@ -23,7 +23,7 @@ footer {
 	height: 20em;
 	margin: 2em;
 	padding: 1em;
-	overflow-y:auto;
+	overflow-y:scroll;
 }
 
 .fav-tweets {
@@ -33,20 +33,21 @@ footer {
 	height: 20em;
 	margin: 2em;
 	padding: 1em;
-	overflow-y:auto;
+	overflow-y: scroll;
 }
-
-#missytest {
-	color: blue;
-}
-
 
 .heart {
     font-size: 16px;
 	color: #aaa;
+	cursor: pointer;
 }
 
 .heart-fav {
   	font-size: 16px;
 	color: #E0245E;
+	cursor: pointer;
+}
+
+.button {
+	cursor: pointer;
 }

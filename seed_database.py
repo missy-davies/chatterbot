@@ -55,42 +55,11 @@ for status in tweepy.Cursor(client.user_timeline, screen_name=twitter_user).item
 names = ['Aurora', 'Beatrice','Claudia','Domiziana', 'Eva',
          'Francesca','Giovanna', 'Helena', 'Ilaria', 'Jessica']
 
-# words = ['Doggo', 'ipsum', 'fluffer', 'noodle', 'horse', 'blep', 'most', 
-#          'angery', 'pupper', 'I', 'have', 'ever', 'seen', 'you', 'are', 
-#          'doing', 'me', 'the', 'shock', 'much', 'ruin', 'diet,', 'fluffer', 
-#          'pupper', 'many', 'pats', 'very', 'taste', 'wow.', 'Blop', 'fat', 
-#          'boi', 'bork', 'fat', 'boi', 'long', 'doggo', 'heckin', 'angery', 
-#          'woofer', 'what', 'a', 'nice', 'floof,', 'extremely', 'cuuuuuute', 
-#          'smol', 'wow', 'very', 'biscit', 'heckin.', 'Clouds', 'sub', 'woofer', 
-#          'you', 'are', 'doin', 'me', 'a', 'concern', 'most', 'angery', 
-#          'pupper', 'I', 'have', 'ever', 'seen', 'very', 'hand', 'that', 'feed', 
-#          'shibe,', 'waggy', 'wags', 'ur', 'givin', 'me', 'a', 'spook', 'very', 
-#          'jealous', 'pupper.', 'heck', 'big', 'ol', 'pupper', 'tungg.', 'Big', 
-#          'ol', 'pupper', 'tungg', 'wrinkler', 'doggo', 'boof', 'many', 'pats,', 
-#          'clouds', 'thicc', 'you', 'are', 'doin', 'me', 'a', 'concern.', 'very', 
-#          'jealous', 'pupper', 'puggo.', 'Heckin', 'clouds', 'super', 'chub', 
-#          'heckin', 'ur', 'givin', 'me', 'a', 'spook,', 'lotsa', 'pats', 'what', 
-#          'a', 'nice', 'floof', 'mlem.', 'Maximum', 'borkdrive', 'length', 'boy', 
-#          'ruff', 'very', 'good', 'spot', 'super', 'chub', 'he', 'made', 'many', 
-#          'woofs', 'borking', 'doggo', 'big', 'ol,', 'adorable', 'doggo', 'vvv', 
-#          'thicc', 'doing', 'me', 'a', 'frighten', 'you', 'are', 'doin', 'me', 
-#          'a', 'concern.', 'Clouds', 'pupper', 'tungg', 'snoot', 'aqua', 'doggo', 
-#          'lotsa', 'pats']
 
-# create 10 users, each of whom has 10 random Tweets generated from Doggo Ipsum
-
+# create 10 users
 for name in names:
     email = f'{name.lower()}@libero.it'
     password = f'supersafe{name.lower()[0]}{names.index(name)}'
 
     user = crud.create_user(name, email, password)
 
-    # for _ in range(10):
-    #     new_tweet = []
-
-    #     for _ in range(5):
-    #         new_tweet.append(choice(words))
-
-    #     str_tweet = (" ").join(new_tweet).capitalize()
-
-    #     ug_tweet = crud.create_ug_tweet(user, False, str_tweet)

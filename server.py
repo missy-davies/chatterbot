@@ -129,6 +129,7 @@ def clean_tweet(line):
 
 
 @app.route('/markov')
+@login_required
 def generate_markov():
     """Generate markov tweet using stored Tweets in database"""
 
@@ -144,11 +145,11 @@ def generate_markov():
 
     crud.create_ug_tweet(user=current_user, fav_status=False, text=tweet)
 
-    # TODO: make sure this page redirects to the generate page so folks can't see it 
     return tweet
 
 
 @app.route('/get-tweets')
+@login_required
 def get_ug_tweets():
     """Show all Markov Tweets a user has generated"""
 
@@ -156,8 +157,6 @@ def get_ug_tweets():
 
     for tweet in current_user.tweets:
         tweets_text.append(tweet.text)
-
-    # TODO: make sure this page redirects to the generate page so folks can't see it 
 
     return jsonify(tweets_text)
 
@@ -168,6 +167,20 @@ def show_favorites():
     """Display favorite generated tweets"""
 
     return render_template('favorites.html')
+
+
+@app.route('/get-fav-tweets')
+@login_required
+def get_fav_tweets():
+    """Show all Markov Tweets a user has favorited"""
+
+    fav_tweets_text = []
+    
+    for tweet in current_user.tweets:
+        if tweet.fav_status == True:
+            fav_tweets_text.append(tweet.text)
+
+    return jsonify(fav_tweets_text)
 
 
 @app.route('/logout')
