@@ -7,7 +7,7 @@
 // to display instead
 const showTweets = (apiData) => {
 	for (const tweet of apiData) {
-		$('.tweets').append(
+		$('.tweets').prepend(
 			'<p>' + '<span class="heart">&hearts;</span>' + tweet + '</p>'
 		);
 	}
@@ -20,7 +20,7 @@ $('#generate-tweet').on('click', (evt) => {
 	evt.preventDefault();
 
 	const makeTweet = (apiData) => {
-		$('.tweets').append(
+		$('.tweets').prepend(
 			'<p>' + '<span class="heart">&hearts;</span>' + apiData + '</p>'
 		);
 	};
@@ -29,24 +29,14 @@ $('#generate-tweet').on('click', (evt) => {
 });
 
 // TODO: WORKING ON THIS NOW, adapt to situation | on click, add tweet to favorites and change color of heart to red
-// $('.heart').on('click', (evt) => {
-// 	evt.preventDefault();
-
-// 	$('.heart').removeClass('heart').addClass('heart-fav');
-// });
-
-// $('.heart').click(function () {
-// 	$(this).toggleClass('.heart-fav');
-// });
-
-$('.heart').on('click', () => {
-	alert('You clicked a heart class!');
+$('.heart').click(function () {
+	$(this).toggleClass('heart-fav');
 });
 
 // Display all favorited tweets
 const showFavTweets = (apiData) => {
 	for (const tweet of apiData) {
-		$('.fav-tweets').append(
+		$('.fav-tweets').prepend(
 			'<p>' + '<span class="heart-fav">&hearts;</span>' + tweet + '</p>'
 		);
 	}
