@@ -169,6 +169,21 @@ def show_favorites():
     return render_template('favorites.html')
 
 
+# TODO: Get this route to work to toggle favorite status 
+@app.route('/toggle-fav')
+@login_required
+def toggle_fav():
+    """Toggle favorite status of a tweet"""
+
+    fav_status = clicked_tweet.fav_status 
+    if fav_status == False:
+        fav_status == True
+    elif fav_staus == True:
+        fav_status == False
+
+    return "{fav_status}"
+
+
 @app.route('/get-fav-tweets')
 @login_required
 def get_fav_tweets():

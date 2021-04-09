@@ -28,7 +28,8 @@ $('#generate-tweet').on('click', (evt) => {
 	$.get('/markov', makeTweet);
 });
 
-// TODO: WORKING ON THIS NOW, adapt to situation | on click, add tweet to favorites and change color of heart to red
+// TODO: WORKING ON THIS NOW |
+// on heart click also need to access the DB and change the fav_status attribute for the tweet
 $('.heart').click(function () {
 	$(this).toggleClass('heart-fav');
 });

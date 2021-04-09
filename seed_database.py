@@ -41,11 +41,12 @@ def get_twitter_client():
     client = tweepy.API(auth, wait_on_rate_limit=True)
     return client 
 
+
 # TODO: Change Twitter account and number of tweets to seed database 
-twitter_user = 'kimkardashian' 
+twitter_user = 'elonmusk' 
 client = get_twitter_client()
 
-for status in tweepy.Cursor(client.user_timeline, screen_name=twitter_user).items(50): # add a number inside the parenthesis of items to limit # of tweets
+for status in tweepy.Cursor(client.user_timeline, screen_name=twitter_user).items(200): # add a number inside the parenthesis of items to limit # of tweets
     text = status.text
 
     db_musk_tweet = crud.create_musk_tweet(text)
@@ -55,8 +56,6 @@ for status in tweepy.Cursor(client.user_timeline, screen_name=twitter_user).item
 names = ['Aurora', 'Beatrice','Claudia','Domiziana', 'Eva',
          'Francesca','Giovanna', 'Helena', 'Ilaria', 'Jessica']
 
-
-# create 10 users
 for name in names:
     email = f'{name.lower()}@libero.it'
     password = f'supersafe{name.lower()[0]}{names.index(name)}'
