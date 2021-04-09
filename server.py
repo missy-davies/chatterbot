@@ -143,20 +143,21 @@ def generate_markov():
     # there are 6.1 chars on average in a word, Twitter's char limit is 280, 
     # so that makes for approx 45 words max in a tweet, rounding down to 40 for some margin
 
-    crud.create_ug_tweet(user=current_user, fav_status=False, text=tweet)
+    tweet_obj = crud.create_ug_tweet(user=current_user, fav_status=False, text=tweet)
 
-    return tweet
+    return jsonify({'id': tweet_obj.ug_tweet_id, 'text': tweet_obj.text})
 
 
 @app.route('/get-tweets')
 @login_required
 def get_ug_tweets():
-    """Show all Markov Tweets a user has generated"""
+    """Return id and text for all Markov Tweets a user has generated"""
 
     tweets_text = []
 
     for tweet in current_user.tweets:
-        tweets_text.append(tweet.text)
+        tweets_text.append({'id': tweet.ug_tweet_id, 
+                            'text': tweet.text}) 
 
     return jsonify(tweets_text)
 
@@ -170,20 +171,29 @@ def show_favorites():
 
 
 # TODO: Get this route to work to toggle favorite status 
-@app.route('/toggle-fav')
+@app.route('/toggle-fav', methods=['POST']) 
 @login_required
 def toggle_fav():
     """Toggle favorite status of a tweet"""
+    # get clicked_tweet out of db
+    # clicked_tweet = UGTweet.query.get(id)
+    # >>> clicked_tweet 
+    # <UGTweet id=1 fav=False text='boo'>
 
-    fav_status = clicked_tweet.fav_status 
-    if fav_status == False:
-        fav_status == True
-    elif fav_staus == True:
-        fav_status == False
+    # take clicked_tweet and change an attribute (fav)
+    # make that attribute the opposite
+    # clicked_tweet.fav = True / False (as below)
+    # db.session.commit()
 
-    return "{fav_status}"
+    # Option 1: use a simple toggle 
+    # clicked_tweet.fav_status = !(clicked_tweet.fav_status)
+    # Option 2: use a ternary expression
+    # clicked_tweet.fav_status = False if clicked_tweet.fav_status else True
+
+    # return (not sure what it returns here, if anything)
 
 
+# TODO: will need to update this function once I get the /fav-tweets route working with saving favs 
 @app.route('/get-fav-tweets')
 @login_required
 def get_fav_tweets():

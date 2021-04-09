@@ -1,16 +1,15 @@
 'use strict;';
 
 // Display all existing tweets
-
-// FIXME: This currently reloads all tweets every time you visit the page
-// in the future to optimize, this could save the tweets, then check for new ones
-// to display instead
 const showTweets = (apiData) => {
 	for (const tweet of apiData) {
 		$('.tweets').prepend(
-			'<p>' + '<span class="heart">&hearts;</span>' + tweet + '</p>'
+			`<p><span id="${tweet.id}" class="heart">&hearts;</span>${tweet.text}</p>`
 		);
 	}
+	$('.heart').click(function () {
+		$(this).toggleClass('heart-fav'); // separate from toggling the class, also do a call to the database, Ajax, make a change this.id
+	});
 };
 
 $.get('/get-tweets', showTweets);
@@ -21,20 +20,17 @@ $('#generate-tweet').on('click', (evt) => {
 
 	const makeTweet = (apiData) => {
 		$('.tweets').prepend(
-			'<p>' + '<span class="heart">&hearts;</span>' + apiData + '</p>'
+			`<p><span id="${apiData.id}" class="heart">&hearts;</span>${apiData.text}</p>`
 		);
-	};
 
+		$('.heart').click(function () {
+			$(this).toggleClass('heart-fav');
+		});
+	};
 	$.get('/markov', makeTweet);
 });
 
-// TODO: WORKING ON THIS NOW |
-// on heart click also need to access the DB and change the fav_status attribute for the tweet
-$('.heart').click(function () {
-	$(this).toggleClass('heart-fav');
-});
-
-// Display all favorited tweets
+// TODO: Make sure this works to: Display all favorited tweets
 const showFavTweets = (apiData) => {
 	for (const tweet of apiData) {
 		$('.fav-tweets').prepend(
