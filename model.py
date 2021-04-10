@@ -87,7 +87,6 @@ class Musk_Tweet(db.Model):
         return f'<Musk_Tweet musk_tweet_id={self.musk_tweet_id} text={self.text}>'
 
 
-# FIXME: May need to change database name here 
 def connect_to_db(flask_app, db_uri='postgresql:///tweetgenerator', echo=True):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     flask_app.config['SQLALCHEMY_ECHO'] = echo

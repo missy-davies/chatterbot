@@ -1,20 +1,24 @@
 'use strict;';
 
+// TODO: On some tweets, the favoriting function doesn't work properly. Sometimes you can't click the button if you nav away from the page
+// TODO: Tweets don't show in id# order, maybe bc of asynchronous rendering?
 // Display all existing tweets
 const showTweets = (apiData) => {
 	for (const tweet of apiData) {
-		$('.tweets').prepend(
-			`<p><span id="${tweet.id}" class="heart">&hearts;</span>${tweet.text}</p>`
-		);
+		if (tweet.fav_status == true) {
+			$('.tweets').prepend(
+				`<p><span id="${tweet.id}" class="heart heart-fav">&hearts;</span>${tweet.text}</p>`
+			);
+		} else {
+			$('.tweets').prepend(
+				`<p><span id="${tweet.id}" class="heart">&hearts;</span>${tweet.text}</p>`
+			);
+		}
 	}
 	$('.heart').click(function () {
-		$(this).toggleClass('heart-fav'); // separate from toggling the class, also do a call to the database, Ajax, make a change this.id
-		// not sure if this is the right place for this info to go
-		const tweetId = {
-			id: this.id,
-		};
+		$(this).toggleClass('heart-fav');
 
-		$.post('/toggle-fav', tweetId);
+		$.post('/toggle-fav.json', { id: this.id });
 	});
 };
 
@@ -31,18 +35,24 @@ $('#generate-tweet').on('click', (evt) => {
 
 		$('.heart').click(function () {
 			$(this).toggleClass('heart-fav');
+
+			$.post('/toggle-fav.json', { id: this.id });
 		});
 	};
 	$.get('/markov', makeTweet);
 });
 
-// TODO: Make sure this works to: Display all favorited tweets
+// Display all favorited tweets where on click you can unfavorite them
 const showFavTweets = (apiData) => {
 	for (const tweet of apiData) {
 		$('.fav-tweets').prepend(
-			'<p>' + '<span class="heart-fav">&hearts;</span>' + tweet + '</p>'
+			`<p><span id="${tweet.id}" class="heart heart-fav">&hearts;</span>${tweet.text}</p>`
 		);
 	}
+	$('.heart').click(function () {
+		$(this).toggleClass('heart-fav');
+		$.post('/toggle-fav.json', { id: this.id });
+	});
 };
 
 $.get('/get-fav-tweets', showFavTweets);

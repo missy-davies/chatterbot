@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, flash, session, redirect, jso
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 import jinja2
 
-from model import connect_to_db, User, Musk_Tweet, UG_Tweet
+from model import db, connect_to_db, User, Musk_Tweet, UG_Tweet
 import crud
 
 from markovchain.text import MarkovText
@@ -157,7 +157,8 @@ def get_ug_tweets():
 
     for tweet in current_user.tweets:
         tweets_text.append({'id': tweet.ug_tweet_id, 
-                            'text': tweet.text}) 
+                            'text': tweet.text,
+                            'fav_status': tweet.fav_status}) 
 
     return jsonify(tweets_text)
 
@@ -170,37 +171,19 @@ def show_favorites():
     return render_template('favorites.html')
 
 
-# TODO: This route still isn't working! Need to get this route to work to toggle favorite status 
-@app.route('/toggle-fav', methods=['POST']) 
+@app.route('/toggle-fav.json', methods=['POST']) 
 @login_required
-def toggle_fav(tweet_id):
+def toggle_fav():
     """Toggle favorite status of a tweet"""
-    # get clicked_tweet out of db
-    # clicked_tweet = UGTweet.query.get(id)
-    # >>> clicked_tweet 
-    # <UGTweet id=1 fav=False text='boo'>
 
-    # take clicked_tweet and change an attribute (fav)
-    # make that attribute the opposite
-    # clicked_tweet.fav = True / False (as below)
-    # db.session.commit()
+    tweet_id = request.form.get('id')
+    clicked_tweet = UG_Tweet.query.get(tweet_id)
+    clicked_tweet.fav_status = False if clicked_tweet.fav_status else True
+    db.session.commit()
 
-    id = tweet_id['id']
-
-    return id
-
-    # clicked_tweet = UG_Tweet.query.get(ug_tweet_id)
-    # return clicked_tweet.ug_tweet_id
-
-    # Option 1: use a simple toggle 
-    # clicked_tweet.fav_status = !(clicked_tweet.fav_status)
-    # Option 2: use a ternary expression
-    # clicked_tweet.fav_status = False if clicked_tweet.fav_status else True
-
-    # return (not sure what it returns here, if anything)
+    return redirect('/generate') # TODO: Is this the right thing to return here? 
 
 
-# TODO: will need to update this function once I get the /fav-tweets route working with saving favs 
 @app.route('/get-fav-tweets')
 @login_required
 def get_fav_tweets():
@@ -210,7 +193,7 @@ def get_fav_tweets():
     
     for tweet in current_user.tweets:
         if tweet.fav_status == True:
-            fav_tweets_text.append(tweet.text)
+            fav_tweets_text.append({'id': tweet.ug_tweet_id, 'text': tweet.text})
 
     return jsonify(fav_tweets_text)
 
