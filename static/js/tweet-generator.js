@@ -9,6 +9,12 @@ const showTweets = (apiData) => {
 	}
 	$('.heart').click(function () {
 		$(this).toggleClass('heart-fav'); // separate from toggling the class, also do a call to the database, Ajax, make a change this.id
+		// not sure if this is the right place for this info to go
+		const tweetId = {
+			id: this.id,
+		};
+
+		$.post('/toggle-fav', tweetId);
 	});
 };
 

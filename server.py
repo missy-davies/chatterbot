@@ -170,10 +170,10 @@ def show_favorites():
     return render_template('favorites.html')
 
 
-# TODO: Get this route to work to toggle favorite status 
+# TODO: This route still isn't working! Need to get this route to work to toggle favorite status 
 @app.route('/toggle-fav', methods=['POST']) 
 @login_required
-def toggle_fav():
+def toggle_fav(tweet_id):
     """Toggle favorite status of a tweet"""
     # get clicked_tweet out of db
     # clicked_tweet = UGTweet.query.get(id)
@@ -184,6 +184,13 @@ def toggle_fav():
     # make that attribute the opposite
     # clicked_tweet.fav = True / False (as below)
     # db.session.commit()
+
+    id = tweet_id['id']
+
+    return id
+
+    # clicked_tweet = UG_Tweet.query.get(ug_tweet_id)
+    # return clicked_tweet.ug_tweet_id
 
     # Option 1: use a simple toggle 
     # clicked_tweet.fav_status = !(clicked_tweet.fav_status)
