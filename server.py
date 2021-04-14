@@ -99,7 +99,10 @@ def show_tweet_generator():
 
 
 def clean_tweet(line):
-    """Clean a Tweet by removing retweets, mentions, links, and other random symbols"""
+    """Clean a Tweet by removing retweets, mentions, links, and other random symbols
+    
+    TODO: Add doctest!! 
+    """
 
     old_line_arr = line.split(' ')
     new_line_arr = []
@@ -131,7 +134,10 @@ def clean_tweet(line):
 @app.route('/markov')
 @login_required
 def generate_markov():
-    """Generate markov tweet using stored Tweets in database"""
+    """Generate markov tweet using stored Tweets in database
+    
+    TODO: Add doc tests! 
+    """
 
     markov = MarkovText() 
 
@@ -201,10 +207,19 @@ def get_fav_tweets():
 @app.route('/logout')
 @login_required
 def logout():
+    """Log user out of session"""
+
     logout_user()
 
     flash(f'See you later!')
     return redirect('/login')
+
+
+@app.errorhandler(404)
+def page_not_found(error):
+    """Return error message for unfound routes"""
+
+    return render_template('page-not-found.html'), 404
 
 
 if __name__ == "__main__":
