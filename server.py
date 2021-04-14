@@ -99,10 +99,7 @@ def show_tweet_generator():
 
 
 def clean_tweet(line):
-    """Clean a Tweet by removing retweets, mentions, links, and other random symbols
-    
-    TODO: Add doctest!! 
-    """
+    """Clean a Tweet by removing retweets, mentions, links, and other random symbols"""
 
     old_line_arr = line.split(' ')
     new_line_arr = []
@@ -134,10 +131,7 @@ def clean_tweet(line):
 @app.route('/markov')
 @login_required
 def generate_markov():
-    """Generate markov tweet using stored Tweets in database
-    
-    TODO: Add doc tests! 
-    """
+    """Generate markov tweet using stored Tweets in database"""
 
     markov = MarkovText() 
 
