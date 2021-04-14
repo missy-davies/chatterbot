@@ -12,7 +12,6 @@ from markovchain.text import MarkovText
 import os
 import sys 
 
-
 app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SERVER_KEY")
 
@@ -156,11 +155,12 @@ def get_ug_tweets():
     tweets_text = []
 
     for tweet in current_user.tweets:
+
         tweets_text.append({'id': tweet.ug_tweet_id, 
                             'text': tweet.text,
                             'fav_status': tweet.fav_status}) 
 
-    return jsonify(tweets_text)
+    return jsonify(sorted(tweets_text, key = lambda i: i['id']))
 
 
 @app.route('/favorites')
