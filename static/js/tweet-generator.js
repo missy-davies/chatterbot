@@ -1,11 +1,20 @@
 'use strict;';
-// MISSY'S NEW REFACTORED CODE
 
+// helper function to add click listener to toggle heart color on a tweet and
+// update database with new fav_status
+const toggleHeart = () => {
+	$('.heart').click(function () {
+		$(this).toggleClass('heart-fav');
+
+		$.post('/toggle-fav.json', { id: this.id });
+	});
+};
+
+// Append all tweets to the box of tweets
 const showTweets = (apiData) => {
-	$('.tweets').empty();
 	for (const tweet of apiData) {
 		if (tweet.fav_status == true) {
-			$('.tweets').prepend(
+			$('.tweets, .fav-tweets').prepend(
 				`<p><span id="${tweet.id}" class="heart heart-fav">&hearts;</span>${tweet.text}</p>`
 			);
 		} else {
@@ -14,19 +23,18 @@ const showTweets = (apiData) => {
 			);
 		}
 	}
-	$('.heart').click(function () {
-		$(this).toggleClass('heart-fav');
-
-		$.post('/toggle-fav.json', { id: this.id });
-	});
+	toggleHeart();
 };
 
+// Helper function to refresh all tweets on the page and then show them
 const refreshTweets = () => {
+	$('.tweets').empty();
 	$.get('/get-tweets', showTweets);
 };
 
 refreshTweets();
 
+// On click, generate a new tweet and fully refresh the page of tweets
 $('#generate-tweet').on('click', (evt) => {
 	evt.preventDefault();
 
@@ -34,60 +42,3 @@ $('#generate-tweet').on('click', (evt) => {
 		refreshTweets();
 	});
 });
-
-// OLD SPAGHETTI CODE
-// TODO: On some tweets, the favoriting function doesn't work properly. Sometimes you can't click the button if you nav away from the page
-// Display all existing tweets
-// const showTweets = (apiData) => {
-// 	for (const tweet of apiData) {
-// 		if (tweet.fav_status == true) {
-// 			$('.tweets').prepend(
-// 				`<p><span id="${tweet.id}" class="heart heart-fav">&hearts;</span>${tweet.text}</p>`
-// 			);
-// 		} else {
-// 			$('.tweets').prepend(
-// 				`<p><span id="${tweet.id}" class="heart">&hearts;</span>${tweet.text}</p>`
-// 			);
-// 		}
-// 	}
-// 	$('.heart').click(function () {
-// 		$(this).toggleClass('heart-fav');
-
-// 		$.post('/toggle-fav.json', { id: this.id });
-// 	});
-// };
-
-// $.get('/get-tweets', showTweets);
-
-// On click, generate another tweet and add to the list
-// $('#generate-tweet').on('click', (evt) => {
-// 	evt.preventDefault();
-
-// 	const makeTweet = (apiData) => {
-// 		$('.tweets').prepend(
-// 			`<p><span id="${apiData.id}" class="heart">&hearts;</span>${apiData.text}</p>`
-// 		);
-
-// 		$('.heart').click(function () {
-// 			$(this).toggleClass('heart-fav');
-
-// 			$.post('/toggle-fav.json', { id: this.id });
-// 		});
-// 	};
-// 	$.get('/markov', makeTweet);
-// });
-
-// Display all favorited tweets where on click you can unfavorite them
-// const showFavTweets = (apiData) => {
-// 	for (const tweet of apiData) {
-// 		$('.fav-tweets').prepend(
-// 			`<p><span id="${tweet.id}" class="heart heart-fav">&hearts;</span>${tweet.text}</p>`
-// 		);
-// 	}
-// 	$('.heart').click(function () {
-// 		$(this).toggleClass('heart-fav');
-// 		$.post('/toggle-fav.json', { id: this.id });
-// 	});
-// };
-
-// $.get('/get-fav-tweets', showFavTweets);

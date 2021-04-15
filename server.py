@@ -144,8 +144,7 @@ def generate_markov():
 
     tweet_obj = crud.create_ug_tweet(user=current_user, fav_status=False, text=tweet)
 
-    # return jsonify({'id': tweet_obj.ug_tweet_id, 'text': tweet_obj.text})
-    return 'None' 
+    return jsonify({'id': tweet_obj.ug_tweet_id, 'text': tweet_obj.text})
 
 
 @app.route('/get-tweets')
@@ -183,20 +182,6 @@ def toggle_fav():
     db.session.commit()
 
     return redirect('/generate') # TODO: Is this the right thing to return here? 
-
-
-@app.route('/get-fav-tweets')
-@login_required
-def get_fav_tweets():
-    """Show all Markov Tweets a user has favorited"""
-
-    fav_tweets_text = []
-    
-    for tweet in current_user.tweets:
-        if tweet.fav_status == True:
-            fav_tweets_text.append({'id': tweet.ug_tweet_id, 'text': tweet.text})
-
-    return jsonify(fav_tweets_text)
 
 
 @app.route('/logout')
