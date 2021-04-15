@@ -144,7 +144,8 @@ def generate_markov():
 
     tweet_obj = crud.create_ug_tweet(user=current_user, fav_status=False, text=tweet)
 
-    return jsonify({'id': tweet_obj.ug_tweet_id, 'text': tweet_obj.text})
+    # return jsonify({'id': tweet_obj.ug_tweet_id, 'text': tweet_obj.text})
+    return 'None' 
 
 
 @app.route('/get-tweets')
