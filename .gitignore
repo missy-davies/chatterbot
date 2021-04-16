@@ -4,3 +4,5 @@ __pycache__
 .DS_Store
 data/elonmusk_user_tweets.xlsx
 secrets.sh
+.coverage
+/htmlcov
