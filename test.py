@@ -4,17 +4,16 @@ from unittest import TestCase
 from server import app
 from flask import session
 import crud
-import model
+from model import connect_to_db, db, User, UG_Tweet, Musk_Tweet
 import os
-import seed_database
 
 def example_data():
     """Create sample data"""
 
     # In case this is run more than once, empty out existing data
-    model.User.query.delete()
-    model.UG_Tweet.query.delete()
-    model.Musk_Tweet.query.delete()
+    User.query.delete()
+    UG_Tweet.query.delete()
+    Musk_Tweet.query.delete()
 
     # Add sample users and original tweets 
     aurora = crud.create_user('Aurora', 'aurora@libero.it', 'test1')
@@ -25,8 +24,8 @@ def example_data():
     musk2 = crud.create_musk_tweet('Tesla AI/Autopilot engineering is awesome! Making excellent progress solving real-world AI.')
     musk3 = crud.create_musk_tweet('The art In Cyberpunk is incredible')
 
-    model.db.session.add_all(aurora, beatrice, claudia, musk1, musk2, musk3)
-    model.db.session.commit()
+    db.session.add_all([aurora, beatrice, claudia, musk1, musk2, musk3])
+    db.session.commit()
 
 
 class FlaskTestsBasic(TestCase):
@@ -37,9 +36,16 @@ class FlaskTestsBasic(TestCase):
 
         self.client = app.test_client()
         app.config['TESTING'] = True
+        app.config['LOGIN_DISABLED'] = True
 
 
-    # Testing GET route
+    def tearDown(self):
+        """Stuff to do after every test"""
+
+        self.client = None
+        app.config['TESTING'] = False
+
+
     def test_create_account(self):
         """Test displaying create account homepage"""
 
@@ -48,7 +54,6 @@ class FlaskTestsBasic(TestCase):
         self.assertIn(b'Sign up to generate Tweets', result.data)
 
 
-    # Testing GET route
     def test_login(self):
         """Test displaying login to existing account homepage"""
 
@@ -63,8 +68,8 @@ class FlaskTestsBasic(TestCase):
         result = self.client.get('/generate')
         self.assertEqual(result.status_code, 200)
         self.assertIn(b'Elon Musk', result.data)
-
-
+   
+   
     def test_favorites(self):
         """Test displaying favorites page"""
 
@@ -72,64 +77,105 @@ class FlaskTestsBasic(TestCase):
         self.assertEqual(result.status_code, 200)
         self.assertIn(b'<div class="fav-tweets">', result.data)
 
-    # TODO: Do I need a tear down here? 
+
+class FlaskTestsDatabaseLoggedIn(TestCase):
+    """Flask tests that use the database while user is logged in""" 
+
+    def setUp(self):
+        """Stuff to do before every test."""
+
+        app.config['TESTING'] = True
+        app.config['SECRET_KEY'] = 'key'
+        self.client = app.test_client()
+
+        connect_to_db(app, 'postgresql:///testdb', echo=False)
+
+        db.create_all()
+        example_data()
+
+        # with self.client:
+        #     response = self.client.post('/login', {'login-email': 'beatrice@libero.it', 'login-password': 'test2'})
+        #     assertEqual(current_user.email, 'beatrice@libero.it')
 
 
-# class FlaskTestsDatabase(TestCase):
-#     """Flask tests that use the database""" 
+    def tearDown(self):
+        """Stuff to do after each test."""
 
-#     def setUp(self):
-#         """Stuff to do before every test."""
+        db.session.remove()
+        db.drop_all()
+        db.engine.dispose()
 
-#         self.client = app.test_client()
-#         app.config['TESTING'] = True
+    # These functions below are from Flask Login documentation 
+    # def login(client, email, password):
+    #     return client.post('/login', data=dict(
+    #                                  email=email,
+    #                                  password=password), 
+    #                                  follow_redirects=True)
 
-#         model.connect_to_db(app, 'postgresql:///testdb', echo=False)
-
-#         model.db.create_all()
-#         example_data()
-
-#     def tearDown(self):
-#         """Stuff to do after each test."""
-
-#         model.db.session.remove()
-#         model.db.drop_all()
-#         model.db.engine.dispose()
+    # def logout(client):
+    #     return client.get('/logout', follow_redirects=True)
 
 
-#     # Testing POST route
-#     def test_create_account_post(self):
-#         """Test getting client data on create account homepage"""
+    def test_create_account_post(self):
+        """Test getting client data on create account homepage"""
 
-#         result = self.client.post('/',
-#                                   data={'fname': 'Domiziana', 
-#                                         'email': 'domiziana@libero.it',
-#                                         'password': 'test4'},
-#                                   follow_redirects=True)
-#         self.assertIn(b'Sign up to generate Tweets', result.data)    
-
-
-#     # Testing POST route
-#     def test_login_post(self):
-#         """Test getting client data on login homepage"""
-
-#         result = self.client.post('/login',
-#                                   data={'login-email': 'aurora@libero.it', 
-#                                         'login-password': 'test1'},
-#                                   follow_redirects=True)
-#         self.assertIn(b'Sign in to generate Tweets', result.data)
+        result = self.client.post('/',
+                                  data={'fname': 'Domiziana', 
+                                        'email': 'domiziana@libero.it',
+                                        'password': 'test4'},
+                                  follow_redirects=True)
+        self.assertIn(b'Hooray, you successfully signed up', result.data)    
 
 
-    # TODO: Maybe delete this one 
+    def test_login_post(self):
+        """Test getting client data on login homepage"""
+
+        result = self.client.post('/login',
+                                  data={'login-email': 'aurora@libero.it', 
+                                        'login-password': 'test1'},
+                                  follow_redirects=True)
+        self.assertIn(b'Logged in as', result.data)
+
+
+class APITest(TestCase):
+    """Flask tests for routes returning API data""" 
+
+    def setUp(self):
+        """Stuff to do before every test."""
+
+        app.config['TESTING'] = True
+        app.config['SECRET_KEY'] = 'key'
+        self.client = app.test_client()
+
+        connect_to_db(app, 'postgresql:///testdb', echo=False)
+
+        db.create_all()
+        example_data()
+
+
+    def tearDown(self):
+        """Stuff to do after each test."""
+
+        db.session.remove()
+        db.drop_all()
+        db.engine.dispose()
+
+
     # def test_markov(self):
     #     """Test generating a markov tweet"""
 
-    #     result = self.client.get('/markov')
-    #     self.assertEqual(result.status_code, 200)
-    #     data = json.loads(response.get_data(as_text=True))
+    #     # result = self.client.get('/markov')
+    #     # self.assertEqual(result.status_code, 200)
+    #     # data = json.loads(response.get_data(as_text=True))
 
-    #     self.assertEqual(data['id'], "1")
-        # Not sure about this one on how to check response data from API 
+    #     # self.assertEqual(data['id'], "1")
+    #     # Not sure about this one on how to check response data from API 
+
+    #     with app.test_client() as c:
+    #         rv = c.post('/markov', json={'id': 1, 'text': 'this is a markov test'})
+    #         json_data = rv.get_json()
+    #         assert app.test_client(self).get('/markov')        
+    #         # self.assertEqual(response.content_type, '/markov')
 
 
     # TODO: Add test for /get-tweets route if I can figure out the /markov route
