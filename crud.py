@@ -30,6 +30,17 @@ def create_musk_tweet(text):
     return musk_tweet
 
 
+# def create_kardashian_tweet(text):
+#     """Create and return an original Tweet from Kim Kardashian West"""
+
+#     kardashian_tweet = Kardashian_Tweet(text=text)
+
+#     db.session.add(kardashian_tweet)
+#     db.session.commit()
+
+#     return kardashian_tweet
+
+
 def create_ug_tweet(user, fav_status, text):
     """Create and return a user generated Markov Tweet"""
 

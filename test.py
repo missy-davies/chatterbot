@@ -6,6 +6,7 @@ from flask import session
 import crud
 from model import connect_to_db, db, User, UG_Tweet, Musk_Tweet
 import os
+import json 
 
 def example_data():
     """Create sample data"""
@@ -93,10 +94,6 @@ class FlaskTestsDatabaseLoggedIn(TestCase):
         db.create_all()
         example_data()
 
-        # with self.client:
-        #     response = self.client.post('/login', {'login-email': 'beatrice@libero.it', 'login-password': 'test2'})
-        #     assertEqual(current_user.email, 'beatrice@libero.it')
-
 
     def tearDown(self):
         """Stuff to do after each test."""
@@ -104,16 +101,6 @@ class FlaskTestsDatabaseLoggedIn(TestCase):
         db.session.remove()
         db.drop_all()
         db.engine.dispose()
-
-    # These functions below are from Flask Login documentation 
-    # def login(client, email, password):
-    #     return client.post('/login', data=dict(
-    #                                  email=email,
-    #                                  password=password), 
-    #                                  follow_redirects=True)
-
-    # def logout(client):
-    #     return client.get('/logout', follow_redirects=True)
 
 
     def test_create_account_post(self):
@@ -152,6 +139,9 @@ class APITest(TestCase):
         db.create_all()
         example_data()
 
+        # logs user in 
+        self.client.post('/login', data={"login-email": "aurora@libero.it", "login-password": "test1"}, follow_redirects=True)
+
 
     def tearDown(self):
         """Stuff to do after each test."""
@@ -161,25 +151,28 @@ class APITest(TestCase):
         db.engine.dispose()
 
 
-    # def test_markov(self):
-    #     """Test generating a markov tweet"""
+    def test_markov(self):
+        """Test generating a markov tweet"""
 
-    #     # result = self.client.get('/markov')
-    #     # self.assertEqual(result.status_code, 200)
-    #     # data = json.loads(response.get_data(as_text=True))
+        result = self.client.get('/markov')
+        self.assertEqual(result.status_code, 200)
+        data = json.loads(result.get_data(as_text=True))
 
-    #     # self.assertEqual(data['id'], "1")
-    #     # Not sure about this one on how to check response data from API 
-
-    #     with app.test_client() as c:
-    #         rv = c.post('/markov', json={'id': 1, 'text': 'this is a markov test'})
-    #         json_data = rv.get_json()
-    #         assert app.test_client(self).get('/markov')        
-    #         # self.assertEqual(response.content_type, '/markov')
+        self.assertEqual(data['id'], 1)
 
 
-    # TODO: Add test for /get-tweets route if I can figure out the /markov route
+    # def test_get_tweets(self):
+    #     """Test getting all generated tweets"""
 
+    #     result = self.client.get('/get-tweets')
+    #     self.assertEqual(result.status_code, 200)
+    #     data = json.loads(result.get_data(as_text=True))
+    
+    #     print('\n' * 5)
+    #     print('HERE IS THE DATA')
+    #     print(data)
+    #     print('\n' * 5)
+    #     self.assertEqual(data[0]['id'], 1)
 
 
 #------------------------------------------------------------------#

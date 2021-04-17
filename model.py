@@ -71,20 +71,59 @@ class UG_Tweet(db.Model):
         return f'<UG_Tweet ug_tweet_id={self.ug_tweet_id} fav_status={self.fav_status} text={self.text}>'
 
 
-class Musk_Tweet(db.Model):
-    """An original Tweet from Elon Musk"""
+# class Musk_Tweet(db.Model):
+#     """An original Tweet from Elon Musk"""
 
-    __tablename__ = 'musk_tweets'
+#     __tablename__ = 'musk_tweets'
 
-    musk_tweet_id = db.Column(db.Integer,
-                              primary_key=True,
-                              autoincrement=True)
+#     musk_tweet_id = db.Column(db.Integer,
+#                               primary_key=True,
+#                               autoincrement=True)
+#     text = db.Column(db.String, nullable=False)
+
+#     def __repr__(self):
+#         """Show info about an Elon Musk Tweet"""
+
+#         return f'<Musk_Tweet musk_tweet_id={self.musk_tweet_id} text={self.text}>'
+
+
+class Original_Tweet(db.Model):
+    """An original Tweet from a given Twitter user"""
+
+    __tablename__ = 'original_tweets'
+
+    original_tweet_id = db.Column(db.Integer,
+                                    primary_key=True,
+                                    autoincrement=True)
     text = db.Column(db.String, nullable=False)
+    author_id = db.Column(db.Integer, db.ForeignKey('authors.author_id')) 
+
+    author = db.relationship('Author')          
 
     def __repr__(self):
-        """Show info about an Elon Musk Tweet"""
+        """Show info about an original Tweet"""
 
-        return f'<Musk_Tweet musk_tweet_id={self.musk_tweet_id} text={self.text}>'
+        return f'<Original_Tweet original_tweet_id={self.original_tweet_id} text={self.text}>'
+
+
+class Author(db.Model):
+    """A user on Twitter who authors tweets"""
+
+    __tablename__ = 'authors'
+
+    author_id = db.Column(db.Integer,
+                          primary_key=True,
+                          autoincrement=True)
+    name = db.Column(db.String, nullable=False)
+    twitter_handle = db.Column(db.String, nullable=False)
+
+    original_tweets = db.relationship('Original_Tweet')
+
+    def __repr__(self):
+        """Show info about an author"""
+
+        return f'<Author author_id={self.author_id} name={self.name} twitter_handle={self.twitter_handle}>'
+
 
 
 def connect_to_db(flask_app, db_uri='postgresql:///tweetgenerator', echo=True):
