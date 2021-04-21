@@ -43,20 +43,22 @@ def get_twitter_client():
 
 
 # TODO: Change Twitter accounts and number of tweets to seed database 
-twitter_elon = 'elonmusk' 
-# twitter_kim = 'kimkardashian' 
+twitter_accounts = [{'name': 'Elon Musk',
+                     'twitter_handle': 'elonmusk'},
+                    {'name': 'Kim Kardashian West',
+                     'twitter_handle': 'kimkardashian'}] 
 client = get_twitter_client()
 
-for status in tweepy.Cursor(client.user_timeline, screen_name=twitter_elon).items(150): # add a number inside the parenthesis of items to limit # of tweets
-    text = status.text
+for account in twitter_accounts:
+    name = account['name']
+    twitter_handle = account['twitter_handle']
 
-    db_musk_tweet = crud.create_original_tweet(text)
+    author = crud.create_author(name, twitter_handle)
 
+    for status in tweepy.Cursor(client.user_timeline, screen_name=twitter_handle).items(150): # add a number inside the parenthesis of items to limit # of tweets
+        text = status.text
 
-# for status in tweepy.Cursor(client.user_timeline, screen_name=twitter_kim).items(150): # add a number inside the parenthesis of items to limit # of tweets
-#     text = status.text
-
-#     db_kardashian_tweet = crud.create_kardashian_tweet(text)
+        db_musk_tweet = crud.create_original_tweet(text, author)
 
 
 # Random names and words to create users and demo texts out of
