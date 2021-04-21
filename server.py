@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, flash, session, redirect, jso
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 import jinja2
 
-from model import db, connect_to_db, User, Musk_Tweet, UG_Tweet
+from model import db, connect_to_db, User, Original_Tweet, UG_Tweet, Author
 import crud
 
 from markovchain.text import MarkovText

@@ -1,6 +1,6 @@
 """CRUD operations"""
 
-from model import db, User, Musk_Tweet, UG_Tweet, connect_to_db
+from model import db, User, Original_Tweet, UG_Tweet, Author, connect_to_db
 
 def create_user(fname, email, password):
     """Create and return a new user"""
@@ -19,26 +19,26 @@ def get_user_by_email(email):
     return User.query.filter(User.email == email).first()
 
 
-def create_musk_tweet(text):
-    """Create and return an original Tweet from Elon Musk"""
+def create_author(name, twitter_handle):
+    """Create and return an author for a tweet"""
 
-    musk_tweet = Musk_Tweet(text=text)
+    author = Author(name=name, twitter_handle=twitter_handle)
 
-    db.session.add(musk_tweet)
+    db.session.add(author)
     db.session.commit()
 
-    return musk_tweet
+    return author
 
 
-# def create_kardashian_tweet(text):
-#     """Create and return an original Tweet from Kim Kardashian West"""
+def create_original_tweet(text, author):
+    """Create and return an original Tweet from an author"""
 
-#     kardashian_tweet = Kardashian_Tweet(text=text)
+    original_tweet = Original_Tweet(text=text, author=author)
 
-#     db.session.add(kardashian_tweet)
-#     db.session.commit()
+    db.session.add(original_tweet)
+    db.session.commit()
 
-#     return kardashian_tweet
+    return original_tweet
 
 
 def create_ug_tweet(user, fav_status, text):
@@ -50,6 +50,12 @@ def create_ug_tweet(user, fav_status, text):
     db.session.commit()
 
     return ug_tweet
+
+
+def get_authors_ug_tweet():
+    """Given a generated tweet, return the authors of that tweet"""
+
+    # TODO: Define this function
 
 
 if __name__ == '__main__':

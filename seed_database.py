@@ -50,7 +50,7 @@ client = get_twitter_client()
 for status in tweepy.Cursor(client.user_timeline, screen_name=twitter_elon).items(150): # add a number inside the parenthesis of items to limit # of tweets
     text = status.text
 
-    db_musk_tweet = crud.create_musk_tweet(text)
+    db_musk_tweet = crud.create_original_tweet(text)
 
 
 # for status in tweepy.Cursor(client.user_timeline, screen_name=twitter_kim).items(150): # add a number inside the parenthesis of items to limit # of tweets

@@ -12,8 +12,8 @@ class User(db.Model):
     __tablename__ = 'users'
 
     user_id = db.Column(db.Integer,
-                   primary_key=True,
-                   autoincrement=True)
+                        primary_key=True,
+                        autoincrement=True)
     fname = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String, nullable=False, unique=True)
     password = db.Column(db.String, nullable=False)
@@ -57,9 +57,9 @@ class UG_Tweet(db.Model):
     __tablename__ = 'ug_tweets'
 
     ug_tweet_id = db.Column(db.Integer,
-                              primary_key=True,
-                              autoincrement=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))           
+                            primary_key=True,
+                            autoincrement=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     fav_status = db.Column(db.Boolean, default=False)
     text = db.Column(db.String, nullable=False)
 
@@ -71,39 +71,23 @@ class UG_Tweet(db.Model):
         return f'<UG_Tweet ug_tweet_id={self.ug_tweet_id} fav_status={self.fav_status} text={self.text}>'
 
 
-# class Musk_Tweet(db.Model):
-#     """An original Tweet from Elon Musk"""
-
-#     __tablename__ = 'musk_tweets'
-
-#     musk_tweet_id = db.Column(db.Integer,
-#                               primary_key=True,
-#                               autoincrement=True)
-#     text = db.Column(db.String, nullable=False)
-
-#     def __repr__(self):
-#         """Show info about an Elon Musk Tweet"""
-
-#         return f'<Musk_Tweet musk_tweet_id={self.musk_tweet_id} text={self.text}>'
-
-
 class Original_Tweet(db.Model):
     """An original Tweet from a given Twitter user"""
 
     __tablename__ = 'original_tweets'
 
     original_tweet_id = db.Column(db.Integer,
-                                    primary_key=True,
-                                    autoincrement=True)
+                                  primary_key=True,
+                                  autoincrement=True)
     text = db.Column(db.String, nullable=False)
     author_id = db.Column(db.Integer, db.ForeignKey('authors.author_id')) 
 
-    author = db.relationship('Author')          
+    author = db.relationship('Author')         
 
     def __repr__(self):
         """Show info about an original Tweet"""
 
-        return f'<Original_Tweet original_tweet_id={self.original_tweet_id} text={self.text}>'
+        return f'<Original_Tweet original_tweet_id={self.original_tweet_id} text={self.text} author={self.author.name}>'
 
 
 class Author(db.Model):
@@ -124,6 +108,29 @@ class Author(db.Model):
 
         return f'<Author author_id={self.author_id} name={self.name} twitter_handle={self.twitter_handle}>'
 
+
+# intermediary table between Original_Tweet and Author 
+# class Link_UG_Tweet_Author(db.Model):
+#     """An intermediary table to find a generated tweet's author(s)"""
+
+#     __tablename__ = 'link_ug_tweet_authors'
+
+    # TODO: I won't be using this id, but sqlalchemy threw an error for not having a primary key 
+    # link_ug_tweet_author_id = db.Column(db.Integer,
+    #                                     primary_key=True,
+    #                                     autoincrement=True)
+    # author_id = db.Column(db.Integer, db.ForeignKey('authors.author_id'))
+    # ug_tweet_id = db.Column(db.Integer, db.ForeignKey('ug_tweets.ug_tweet_id'))
+
+    # def __repr__(self):
+    #     """Show author id and generated tweet id"""
+
+    #     return f'<Link_UG_Tweet_Author author_id={self.author_id} ug_tweet_id={self.ug_tweet_id}>'
+
+link_ug_tweet_authors = db.Table('link_ug_tweet_authors', db.Model.metadata,
+    db.Column('author_id', db.Integer, db.ForeignKey('authors.author_id')),
+    db.Column('ug_tweet_id', db.Integer, db.ForeignKey('ug_tweets.ug_tweet_id'))
+)
 
 
 def connect_to_db(flask_app, db_uri='postgresql:///tweetgenerator', echo=True):
