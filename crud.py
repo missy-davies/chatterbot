@@ -41,10 +41,10 @@ def create_original_tweet(text, author):
     return original_tweet
 
 
-def create_ug_tweet(user, fav_status, text):
+def create_ug_tweet(user, fav_status, text, authors):
     """Create and return a user generated Markov Tweet"""
 
-    ug_tweet = UG_Tweet(user=user, fav_status=fav_status, text=text)
+    ug_tweet = UG_Tweet(user=user, fav_status=fav_status, text=text, authors=authors)
 
     db.session.add(ug_tweet)
     db.session.commit()
@@ -55,7 +55,7 @@ def create_ug_tweet(user, fav_status, text):
 def get_authors_ug_tweet():
     """Given a generated tweet, return the authors of that tweet"""
 
-    # TODO: Define this function
+    # TODO: Maybe need a function like this? 
 
 
 if __name__ == '__main__':
