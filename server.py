@@ -50,6 +50,15 @@ def create_account():
     if user:
         flash('Oops, looks like an account already exists with that email! Please log in.')
         return redirect('/login')
+    elif '@' not in email and len(password) < 7:
+        flash('Please enter a valid email address and ensure your password is at least 7 characters long')
+        return redirect('/')
+    elif '@' not in email:
+        flash('Please enter a valid email address.')
+        return redirect('/')
+    elif len(password) < 7:
+        flash('Password must be at least 7 characters long')
+        return redirect('/')
     else:
         crud.create_user(fname, email, password)
         flash("Hooray, you successfully signed up for an account! Please log in")
@@ -59,9 +68,6 @@ def create_account():
 @app.route('/login')
 def show_login():
     """Display landing page with login to existing account details"""
-    
-    # TODO: Add email and password criteria to ensure email is real and 
-    # password meets requirements 
 
     if current_user.is_authenticated:
         return redirect('/generate')
