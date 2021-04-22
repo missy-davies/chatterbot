@@ -133,24 +133,30 @@ def clean_tweet(line):
     return (' ').join(new_line_arr)
 
 
-@app.route('/markov')
+@app.route('/markov', methods = ['POST', 'GET'])
 @login_required
 def generate_markov():
     """Generate markov tweet using stored Tweets in database"""
+    # TODO: Need to edit this after javascript is ok 
+    if request.method == 'POST':
+        twitter_handles = request.form.getlist('twitter_handles')
+        return twitter_handles
+    else:
+        # markov = MarkovText() 
+        # twitter_accounts = 'elonmusk' # request.form.getlist('check')
 
-    markov = MarkovText() 
+        # for tweet_obj in Original_Tweet.query.all():
+        #     new_tweet = clean_tweet(tweet_obj.text)
+        #     markov.data(new_tweet)
 
-    for tweet_obj in Musk_Tweet.query.all():
-        new_tweet = clean_tweet(tweet_obj.text)
-        markov.data(new_tweet)
+        # tweet = markov(max_length=40)
+        # # there are 6.1 chars on average in a word, Twitter's char limit is 280, 
+        # # so that makes for approx 45 words max in a tweet, rounding down to 40 for some margin
 
-    tweet = markov(max_length=40)
-    # there are 6.1 chars on average in a word, Twitter's char limit is 280, 
-    # so that makes for approx 45 words max in a tweet, rounding down to 40 for some margin
+        # tweet_obj = crud.create_ug_tweet(user=current_user, fav_status=False, text=tweet)
 
-    tweet_obj = crud.create_ug_tweet(user=current_user, fav_status=False, text=tweet)
-
-    return jsonify({'id': tweet_obj.ug_tweet_id, 'text': tweet_obj.text})
+        # return jsonify({'id': tweet_obj.ug_tweet_id, 'text': tweet_obj.text})
+        return 'hello'
 
 
 @app.route('/get-tweets')

@@ -7,17 +7,25 @@
   <button class="button" type="submit" formaction="/logout">Log Out</button>
 </form>
 
-<div class="elon-musk">
-  <h3>Elon Musk</h3>
-  <h3>@elonmusk</h3>
-  <img src="/static/img/musk_profile_icon.png" 
-      alt="Elon Musk's profile icon of a rocket" />
+<div class="twitter-accounts">
+  <h3>Choose 1-2 accounts to generate tweets:</h3>
+  <!-- <img src="/static/img/musk_profile_icon.png" 
+      alt="Elon Musk's profile icon of a rocket" /> -->
+  <div class="checkbox">
+    <input type="checkbox" id="elonmusk" name="check" value="elonmusk" checked>
+    <label for="elonmusk">Elon Musk | @elonmusk</label>
+  </div>
+  <div class="checkbox">
+    <input type="checkbox" id="kimkardashian" name="check" value="kimkardashian">
+    <label for="kimkardashian">Kim Kardashian West | @kimkardashian
+    </label>
+  </div>
 
-<button class="button" id="generate-tweet" type="submit">Generate Tweet</button>
+  <button class="button" id="generate-tweet" type="submit">Generate Tweet</button>
 
-<form>
-  <button class="button" type="submit" formaction="/favorites">View Favorite Tweets</button>
-</form>
+  <form>
+    <button class="button" type="submit" formaction="/favorites">View Favorite Tweets</button>
+  </form>
 
 </div>
 
