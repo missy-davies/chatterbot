@@ -137,6 +137,25 @@ def clean_tweet(line):
     return (' ').join(new_line_arr)
 
 
+def make_bot_username(list_authors): 
+    """Take in a list of author objects and return a new 'bot' fake username"""
+
+    bot_name = []
+
+    if len(list_authors) == 1:
+        bot_name.extend(list_authors[0].name.split(' '))
+        bot_name.append('bot')
+    else:
+        for author in list_authors[1:]:
+            # extend bot_name with all last names
+            # ex. Kim Kardashian West would extend with 'Kardashian West'
+            bot_name.extend(author.name.split(' ')[1:])
+
+        # insert first name of first author in list to the bot_name 
+        bot_name[0:0] = [[list_authors[0].name.split(' ')[0]]]
+    return '_'.join(bot_name).lower()
+
+
 def markov_algo(list_twitter_accounts): 
     """Use Markov library to create and return a string based given twitter account(s)"""
 
@@ -159,8 +178,8 @@ def markov_algo(list_twitter_accounts):
         # so that makes for approx 45 words max in a tweet, rounding down to 40 for some margin
         
         tweet_obj = crud.create_ug_tweet(user=current_user, fav_status=False, text=tweet, authors=author_objs)
-        
-        return jsonify({'id': tweet_obj.ug_tweet_id, 'text': tweet_obj.text})
+
+        return jsonify({'id': tweet_obj.ug_tweet_id, 'text': tweet_obj.text, 'bot-username': make_bot_username(tweet_obj.authors)})
     else:
         return ValueError('No Twitter accounts selected') 
 
@@ -227,7 +246,7 @@ def show_favorites():
     return render_template('favorites.html')
 
 
-@app.route('/toggle-fav.json', methods=['POST']) 
+@app.route('/toggle-fav', methods=['POST']) 
 @login_required
 def toggle_fav():
     """Toggle favorite status of a tweet"""
@@ -237,7 +256,7 @@ def toggle_fav():
     clicked_tweet.fav_status = False if clicked_tweet.fav_status else True
     db.session.commit()
 
-    return redirect('/generate') # TODO: Is this the right thing to return here? 
+    return redirect('/generate') # TODO: Can also just remove return all together 
 
 
 #################| Logout & Error Handler Routes |#################

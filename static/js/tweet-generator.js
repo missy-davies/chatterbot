@@ -6,7 +6,7 @@ const toggleHeart = () => {
 	$('.heart').click(function () {
 		$(this).toggleClass('heart-fav');
 
-		$.post('/toggle-fav.json', { id: this.id });
+		$.post('/toggle-fav', { id: this.id });
 	});
 };
 
@@ -15,7 +15,7 @@ const showTweets = (apiData) => {
 	for (const tweet of apiData) {
 		if (tweet.fav_status == true) {
 			$('.tweets, .fav-tweets').prepend(
-				`<p><span id="${tweet.id}" class="heart heart-fav">&hearts;</span>@usernamehere ${tweet.text}</p>`
+				`<p><span id="${tweet.id}" class="heart heart-fav">&hearts;</span>@${tweet.bot-username} ${tweet.text}</p>`
 			);
 		} else {
 			$('.tweets').prepend(
