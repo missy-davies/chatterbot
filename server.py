@@ -133,30 +133,62 @@ def clean_tweet(line):
     return (' ').join(new_line_arr)
 
 
-@app.route('/markov', methods = ['POST', 'GET'])
+def markov_algo(list_twitter_accounts): 
+    """Use Markov library to create and return a string based given twitter account(s)"""
+
+    if len(list_twitter_accounts) != 0:
+        markov = MarkovText() 
+
+        # Create list of author objects by iterating through given list of selected twitter accounts
+        author_objs = []
+        for index, twitter_account in enumerate(list_twitter_accounts):
+            author_objs.append(Author.query.filter_by(twitter_handle=list_twitter_accounts[index]).one())
+
+        # Get and clean all of the original tweets for each selected author 
+        for author_obj in author_objs:
+            for tweet_obj in Original_Tweet.query.filter_by(author=author_obj).all():
+                new_tweet = clean_tweet(tweet_obj.text)
+                markov.data(new_tweet)
+
+        tweet = markov(max_length=40)
+        # there are 6.1 chars on average in a word, Twitter's char limit is 280, 
+        # so that makes for approx 45 words max in a tweet, rounding down to 40 for some margin
+        
+        tweet_obj = crud.create_ug_tweet(user=current_user, fav_status=False, text=tweet, authors=author_objs)
+        
+        return jsonify({'id': tweet_obj.ug_tweet_id, 'text': tweet_obj.text})
+    else:
+        return None # TODO: Handle case where someone doesn't check any boxes for Twitter accounts 
+
+
+def str_to_bool(string_val):
+    """Take in a string of 'true' or 'false' and convert to Python boolean"""
+
+    if string_val[0] == 'f':
+        return False
+    elif string_val[0] == 't':
+        return True 
+
+
+@app.route('/markov')
 @login_required
 def generate_markov():
     """Generate markov tweet using stored Tweets in database"""
-    # TODO: Need to edit this after javascript is ok 
-    if request.method == 'POST':
-        twitter_handles = request.form.getlist('twitter_handles')
-        return twitter_handles
-    else:
-        # markov = MarkovText() 
-        # twitter_accounts = 'elonmusk' # request.form.getlist('check')
+    
+    selected_twitter_people = [
+        {'handle': 'elonmusk',
+        'status': str_to_bool(request.args.get('elonmusk'))},
+        {'handle': 'kimkardashian',
+        'status': str_to_bool(request.args.get('kimkardashian'))}
+        ]
 
-        # for tweet_obj in Original_Tweet.query.all():
-        #     new_tweet = clean_tweet(tweet_obj.text)
-        #     markov.data(new_tweet)
+    accounts = []
 
-        # tweet = markov(max_length=40)
-        # # there are 6.1 chars on average in a word, Twitter's char limit is 280, 
-        # # so that makes for approx 45 words max in a tweet, rounding down to 40 for some margin
+    for person in selected_twitter_people:
+        if person['status'] == True:
+            accounts.append(person['handle'])
 
-        # tweet_obj = crud.create_ug_tweet(user=current_user, fav_status=False, text=tweet)
-
-        # return jsonify({'id': tweet_obj.ug_tweet_id, 'text': tweet_obj.text})
-        return 'hello'
+    return markov_algo(accounts)
 
 
 @app.route('/get-tweets')

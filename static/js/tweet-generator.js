@@ -34,27 +34,18 @@ const refreshTweets = () => {
 
 refreshTweets();
 
-// Helper function to figure out which checkboxes are checked
-const checkCheckboxes = () => {
-	if ($('#elonmusk').is(':checked') && $('#kimkardashian').is(':checked')) {
-		// execute AJAX request here
-		$.post('/markov', { twitter_handles: ['elonmusk', 'kimkardashian'] });
-	} else if ($('#kimkardashian').is(':checked')) {
-		$.post('/markov', { twitter_handles: ['kimkardashian'] });
-	} else if ($('#elonmusk').is(':checked')) {
-		$.post('/markov', { twitter_handles: ['elonmusk'] });
-	} else {
-		// that means nothing is checked, so we should flash an error?
-		alert('Please select at least one Twitter account');
-	}
-};
-
 // On click, generate a new tweet and fully refresh the page of tweets
+// Pass in the selected twitter accounts as data
 $('#generate-tweet').on('click', (evt) => {
 	evt.preventDefault();
+	let data = {
+		kimkardashian: $('#kimkardashian').is(':checked'),
+		elonmusk: $('#elonmusk').is(':checked'),
+	};
 
-	$.get('/markov', function () {
-		refreshTweets();
+	$.get('/markov', data, function (res) {
+		if (res != null) {
+			refreshTweets();
+		}
 	});
-	// add post request here to send data of which twitter accounts to use based on the checkCheckboxes function above?
 });
