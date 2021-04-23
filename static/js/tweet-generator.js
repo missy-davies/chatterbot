@@ -38,14 +38,20 @@ refreshTweets();
 // Pass in the selected twitter accounts as data
 $('#generate-tweet').on('click', (evt) => {
 	evt.preventDefault();
-	let data = {
-		kimkardashian: $('#kimkardashian').is(':checked'),
-		elonmusk: $('#elonmusk').is(':checked'),
-	};
 
-	$.get('/markov', data, function (res) {
-		if (res != null) {
-			refreshTweets();
-		}
-	});
+	// Only send request if at least one Twitter account is selected
+	if (!$('#kimkardashian').is(':checked') && !$('#elonmusk').is(':checked')) {
+		alert('Oops, please select at least one Twitter account.');
+	} else {
+		let data = {
+			kimkardashian: $('#kimkardashian').is(':checked'),
+			elonmusk: $('#elonmusk').is(':checked'),
+		};
+
+		$.get('/markov', data, function (res) {
+			if (res != null) {
+				refreshTweets();
+			}
+		});
+	}
 });

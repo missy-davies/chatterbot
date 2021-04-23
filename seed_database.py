@@ -70,4 +70,3 @@ for name in names:
     password = f'supersafe{name.lower()[0]}{names.index(name)}'
 
     user = crud.create_user(name, email, password)
-

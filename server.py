@@ -158,7 +158,7 @@ def markov_algo(list_twitter_accounts):
         
         return jsonify({'id': tweet_obj.ug_tweet_id, 'text': tweet_obj.text})
     else:
-        return jsonify({'id': 0, 'text': 'None'}) # TODO: Handle case where someone doesn't check any boxes for Twitter accounts 
+        return ValueError('No Twitter accounts selected') 
 
 
 def str_to_bool(string_val):
