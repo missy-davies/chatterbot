@@ -19,7 +19,7 @@ model.connect_to_db(server.app)
 model.db.create_all()
 
 
-# Seed database with Tweets using a Twitter API call with the Tweepy wrapper
+# Set up to use Twitter API with the Tweepy wrapper
 def twitter_auth():
     """Authenticate Twitter API connection with secret keys"""
 
@@ -42,7 +42,6 @@ def get_twitter_client():
     return client 
 
 
-# TODO: Change Twitter accounts and number of tweets to seed database 
 twitter_accounts = [{'name': 'Elon Musk',
                      'twitter_handle': 'elonmusk'},
                     {'name': 'Kim Kardashian West',
@@ -56,6 +55,7 @@ twitter_accounts = [{'name': 'Elon Musk',
                      ] 
 client = get_twitter_client()
 
+# Seed database with tweets from each above Twitter account
 for account in twitter_accounts:
     name = account['name']
     twitter_handle = account['twitter_handle']
@@ -68,7 +68,8 @@ for account in twitter_accounts:
         db_musk_tweet = crud.create_original_tweet(text, author)
 
 
-# Random names and words to create users and demo texts out of
+# TODO: Remove fake users, maybe seed with demo user 
+# Random names to create users
 names = ['Aurora', 'Beatrice','Claudia','Domiziana', 'Eva',
          'Francesca','Giovanna', 'Helena', 'Ilaria', 'Jessica']
 

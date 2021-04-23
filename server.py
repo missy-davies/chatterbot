@@ -21,6 +21,8 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 
+#################| Login Routes |#################
+
 @login_manager.user_loader
 def load_user(user_id):
     """Reload the user object from the user_id stored in the session"""
@@ -94,6 +96,8 @@ def login():
         login_user(user)
         return redirect('/generate')
 
+
+#################| Routes Using Markov Library |#################
 
 @app.route('/generate')
 @login_required
@@ -197,6 +201,8 @@ def generate_markov():
     return markov_algo(accounts)
 
 
+#################| Routes to Display Tweets |#################
+
 @app.route('/get-tweets')
 @login_required
 def get_ug_tweets():
@@ -233,6 +239,8 @@ def toggle_fav():
 
     return redirect('/generate') # TODO: Is this the right thing to return here? 
 
+
+#################| Logout & Error Handler Routes |#################
 
 @app.route('/logout')
 @login_required
