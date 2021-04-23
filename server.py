@@ -116,7 +116,7 @@ def clean_tweet(line):
 
         # remove retweets and mentions, links, and random symbols
         if word != 'RT' and word != '"RT' and '@' not in word \
-                    and word[0:4] != 'http' \
+                    and 'http' not in word \
                     and 'www' not in word \
                     and '.com' not in word \
                     and word != ':' and word != '!' and word != '-' \
@@ -179,7 +179,13 @@ def generate_markov():
         {'handle': 'elonmusk',
         'status': str_to_bool(request.args.get('elonmusk'))},
         {'handle': 'kimkardashian',
-        'status': str_to_bool(request.args.get('kimkardashian'))}
+        'status': str_to_bool(request.args.get('kimkardashian'))},
+        {'handle': 'britneyspears',
+        'status': str_to_bool(request.args.get('britneyspears'))},
+        {'handle': 'justinbieber',
+        'status': str_to_bool(request.args.get('justinbieber'))},
+        {'handle': 'ladygaga',
+        'status': str_to_bool(request.args.get('ladygaga'))}
         ]
 
     accounts = []

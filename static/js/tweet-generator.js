@@ -15,11 +15,11 @@ const showTweets = (apiData) => {
 	for (const tweet of apiData) {
 		if (tweet.fav_status == true) {
 			$('.tweets, .fav-tweets').prepend(
-				`<p><span id="${tweet.id}" class="heart heart-fav">&hearts;</span>${tweet.text}</p>`
+				`<p><span id="${tweet.id}" class="heart heart-fav">&hearts;</span>@usernamehere ${tweet.text}</p>`
 			);
 		} else {
 			$('.tweets').prepend(
-				`<p><span id="${tweet.id}" class="heart">&hearts;</span>${tweet.text}</p>`
+				`<p><span id="${tweet.id}" class="heart">&hearts;</span>@usernamehere ${tweet.text}</p>`
 			);
 		}
 	}
@@ -40,12 +40,21 @@ $('#generate-tweet').on('click', (evt) => {
 	evt.preventDefault();
 
 	// Only send request if at least one Twitter account is selected
-	if (!$('#kimkardashian').is(':checked') && !$('#elonmusk').is(':checked')) {
+	if (
+		!$('#kimkardashian').is(':checked') &&
+		!$('#elonmusk').is(':checked') &&
+		!$('#britneyspears').is(':checked') &&
+		!$('#justinbieber').is(':checked') &&
+		!$('#ladygaga').is(':checked')
+	) {
 		alert('Oops, please select at least one Twitter account.');
 	} else {
 		let data = {
 			kimkardashian: $('#kimkardashian').is(':checked'),
 			elonmusk: $('#elonmusk').is(':checked'),
+			britneyspears: $('#britneyspears').is(':checked'),
+			justinbieber: $('#justinbieber').is(':checked'),
+			ladygaga: $('#ladygaga').is(':checked'),
 		};
 
 		$.get('/markov', data, function (res) {
