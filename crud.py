@@ -41,10 +41,10 @@ def create_original_tweet(text, author):
     return original_tweet
 
 
-def create_ug_tweet(user, fav_status, text, authors):
+def create_ug_tweet(user, fav_status, text, authors, botname):
     """Create and return a user generated Markov Tweet"""
 
-    ug_tweet = UG_Tweet(user=user, fav_status=fav_status, text=text, authors=authors)
+    ug_tweet = UG_Tweet(user=user, fav_status=fav_status, text=text, authors=authors, botname=botname)
 
     db.session.add(ug_tweet)
     db.session.commit()
@@ -52,10 +52,24 @@ def create_ug_tweet(user, fav_status, text, authors):
     return ug_tweet
 
 
-def get_authors_ug_tweet():
-    """Given a generated tweet, return the authors of that tweet"""
+def make_bot_username(list_authors): 
+    """Take in a list of author objects and return a new 'bot' fake username"""
 
-    # TODO: Maybe need a function like this? 
+    bot_name = []
+
+    if len(list_authors) == 1:
+        bot_name.extend([list_authors[0].twitter_handle, 'bot'])
+    else:
+        for author in list_authors[1:]:
+            # extend bot_name with all last names
+            # ex. Kim Kardashian West would extend with 'Kardashian West'
+            bot_name.extend(author.name.split(' ')[1:])
+
+        # insert first name of first author in list to the bot_name 
+        bot_name[0:0] = [list_authors[0].name.split(' ')[0]]
+        bot_name.append('bot')
+
+    return '_'.join([name.lower() for name in bot_name])
 
 
 if __name__ == '__main__':

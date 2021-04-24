@@ -44,12 +44,12 @@ def get_twitter_client():
 
 twitter_accounts = [{'name': 'Elon Musk',
                      'twitter_handle': 'elonmusk'},
-                    {'name': 'Kim Kardashian West',
-                     'twitter_handle': 'kimkardashian'},
                     {'name': 'Britney Spears',
                     'twitter_handle': 'britneyspears'},
                     {'name': 'Justin Bieber',
                     'twitter_handle': 'justinbieber'},
+                    {'name': 'Kim Kardashian West',
+                     'twitter_handle': 'kimkardashian'},
                     {'name': 'Lady Gaga',
                     'twitter_handle': 'ladygaga'}
                      ] 

@@ -69,13 +69,14 @@ class UG_Tweet(db.Model):
     fav_status = db.Column(db.Boolean, default=False)
     text = db.Column(db.String, nullable=False)
     authors = db.relationship('Author', secondary=link_ug_tweet_authors, back_populates='ug_tweets') 
+    botname = db.Column(db.String, nullable=False)
 
     user = db.relationship('User')
 
     def __repr__(self):
         """Show info about a user generated Markov chain Tweet"""
 
-        return f'<UG_Tweet ug_tweet_id={self.ug_tweet_id} fav_status={self.fav_status} text={self.text}>'
+        return f'<UG_Tweet ug_tweet_id={self.ug_tweet_id} fav_status={self.fav_status} botname={self.botname} text={self.text}>'
 
 
 class Original_Tweet(db.Model):
