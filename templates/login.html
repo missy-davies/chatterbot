@@ -3,30 +3,36 @@
 {% block title %}Homepage: Log In to an Exisiting Account{% endblock %} 
 
 {% block body%}
-
-<h1>They Really Said That?! Mash together celebrities and generate crazy new Tweets</h1>
-
-<!-- Login or create an account widget  -->
-<div class="account-widget">
-
-  <h2>Welcome</h2>
-  <p>Sign in to generate Tweets</p>
-
-  <form action="/login" method="POST">
-    <div>
-      <input type="text" name="login-email" id="login-email" placeholder="email" required />
+<div class="container">
+  <div class="row align-items-center">
+    <div class="col">
+      <h1>They Really Said That?! Mash together celebrities and generate crazy new Tweets</h1>
     </div>
-    <div>
-      <input type="password" name="login-password" id="login-password"
-      placeholder="password" required />
+
+    <!-- Login or create an account widget  -->
+    <div class="col">
+      <div class="account-widget">
+
+        <h2>Welcome</h2>
+        <p>Sign in to generate Tweets</p>
+
+        <form action="/login" method="POST">
+          <div>
+            <input type="text" name="login-email" id="login-email" placeholder="email" required />
+          </div>
+          <div>
+            <input type="password" name="login-password" id="login-password"
+            placeholder="password" required />
+          </div>
+          <button class="button" type="submit">Log In</button>
+        </form>
+
+        <p class="session-terms">By continuing you agree to They Really Said That?!'s Terms of Service</p>
+
+        <a href="/">Not a member yet? Sign Up</a>
+      </div>
     </div>
-    <button class="button" type="submit">Log In</button>
-  </form>
-
-  <p>By continuing you agree to They Really Said That?!'s Terms of Service</p>
-
-  <a href="/">Not a member yet? Sign Up</a>
-
+  </div>
 </div>
 
 {% endblock %}
