@@ -3,16 +3,21 @@
 {% block title %}Favorites{% endblock %} 
 
 {% block body %}
-<form>
-  <button class="button" type="submit" formaction="/logout">Log Out</button>
-</form>
-
-<div class="fav-tweets">
+<div class="container">
+  <form>
+    <button class="button" type="submit" formaction="/logout">Log Out</button>
+  </form>
+  <div class="row">
+    <div class="col">
+      <form>
+        <button class="button" type="submit" formaction="/generate">Generate More Tweets</button>
+      </form>
+    </div>
+    <div class="col">
+      <div class="fav-tweets">
+      </div>
+    </div>
+  </div>
 </div>
-
-<form>
-  <button class="button" type="submit" formaction="/generate">Generate More Tweets</button>
-</form>
-
 
 {% endblock %}

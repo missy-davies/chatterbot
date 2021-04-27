@@ -15,7 +15,7 @@
 
 		<!-- Google Fonts -->
 		<link rel="preconnect" href="https://fonts.gstatic.com">
-		<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Noto+Serif:wght@700&family=Open+Sans&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Ubuntu&family=Noto+Serif:wght@700&family=Open+Sans&display=swap" rel="stylesheet">
 
 		<!-- JQuery Installation  -->
 		<script
@@ -31,17 +31,16 @@
 		{% for msg in get_flashed_messages() %}
 		<p class="flash-msg">{{ msg }}</p>
 		{% endfor %} 
-		{% block body %}{% endblock %}
+		{% block body %}
+		{% endblock %}
 		<script src="/static/js/tweet-generator.js"></script>
 	</body>
 
 	<footer class="footer">
-		<div class="container-fluid">
-			<ul>
-				<li>Handmade with 💖 by Missy Davies</li>
-				<li><a href="https://github.com/missy-davies" target="_blank">GitHub</a></li>
-				<li><a href="https://www.linkedin.com/in/missydavies/" target="_blank">LinkedIn</a></li>
-			</ul>
-		</div>
+		<ul>
+			<li>Handmade with 💖 by Missy Davies</li>
+			<li><a href="https://github.com/missy-davies" target="_blank">GitHub</a></li>
+			<li><a href="https://www.linkedin.com/in/missydavies/" target="_blank">LinkedIn</a></li>
+		</ul>
 	</footer>
 </html>
