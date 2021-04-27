@@ -41,16 +41,6 @@ ul, li {
 }
 
 /* Account Login Widget */
-.account-widget {
-	border-radius: 30px;
-	border: 3px solid black;
-	width: 20em;
-	height: 25em;
-	margin: 2em;
-	padding: 3.5em;
-	display: inline-block;
-}
-
 .account-widget h2, .account-widget p {
 	text-align: center;
 }
@@ -87,25 +77,33 @@ input {
 	cursor: pointer;
 } */
 
-/* Tweets */
-.tweets {
-	border-radius: 3px;
-	border: 3px solid black;
-	width: 20em;
-	height: 20em;
-	margin: 2em;
-	padding: 1em;
-	overflow-y:scroll;
+/* Celebrity Accounts Checkboxes */
+img {
+    max-width:10%;
+    height:auto;
 }
 
-.fav-tweets {
-	border-radius: 3px;
+/* TODO: Left off here trying to get celebs formatted right  */
+/* .elon, .kim, .britney, .justin, .gaga {
+	display: inline-block;
+} */
+
+
+/* Tweets and Widgets */
+.tweet-widget, .account-widget {
+	border-radius: 30px;
 	border: 3px solid black;
-	width: 20em;
-	height: 20em;
+	width: 30em;
+	height: 35em;
 	margin: 2em;
-	padding: 1em;
-	overflow-y: scroll;
+	padding: 3em;
+}
+
+/* TODO: This isn't centered properly, but it looks ok from the sizes */
+.tweets, .fav-tweets {
+	overflow-y:scroll;
+	width: 25em;
+	height: 30em;
 }
 
 .heart {

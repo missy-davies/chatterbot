@@ -179,10 +179,6 @@ class APITest(TestCase):
     #     self.assertEqual(result.status_code, 200)
     #     data = json.loads(result.get_data(as_text=True))
     
-    #     print('\n' * 5)
-    #     print('HERE IS THE DATA')
-    #     print(data)
-    #     print('\n' * 5)
     #     self.assertEqual(data[0]['id'], 1)
 
 
