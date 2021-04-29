@@ -50,20 +50,20 @@ def create_account():
 
     user = crud.get_user_by_email(email)
     if user:
-        flash('Oops, looks like an account already exists with that email! Please log in.')
+        flash('Oops, looks like an account already exists with that email! Please log in 🙏')
         return redirect('/login')
     elif '@' not in email and len(password) < 7:
-        flash('Please enter a valid email address and ensure your password is at least 7 characters long')
+        flash('Please enter a valid email address and ensure your password is at least 7 characters long 🔒')
         return redirect('/')
     elif '@' not in email:
-        flash('Please enter a valid email address.')
+        flash('Please enter a valid email address 💌')
         return redirect('/')
     elif len(password) < 7:
-        flash('Password must be at least 7 characters long')
+        flash('Password must be at least 7 characters long 🔒')
         return redirect('/')
     else:
         crud.create_user(fname, email, password)
-        flash("Hooray, you successfully signed up for an account! Please log in")
+        flash("Hooray, you successfully signed up for an account! Please log in 🎉")
         return redirect('/login')
 
 
@@ -85,14 +85,14 @@ def login():
     password = request.form['login-password']
 
     if user == None:
-        flash('''Oops, we couldn't find an account under that email address. 
-                Please create a new account and try again!''')
+        flash('''Oops, we couldn't find an account under that email address.
+                Please create a new account and try again! 👾''')
         return redirect('/')
     elif password != user.password:
-        flash('Incorrect password. Please try again.')
+        flash('Wrong password, please try again 😁')
         return redirect('/login')
     else:
-        flash(f'Logged in as {user.fname}!')
+        flash(f'Welcome, {user.fname}!')
         login_user(user)
         return redirect('/generate')
 
@@ -105,36 +105,6 @@ def show_tweet_generator():
     """Show tweet generator page and generate new tweets"""
 
     return render_template('generate.html')
-
-
-def clean_tweet(line):
-    """Clean a Tweet by removing retweets, mentions, links, and other random symbols"""
-
-    old_line_arr = line.split(' ')
-    new_line_arr = []
-    
-    # FIXME: This may be inefficient and slow the program. May need to refactor later
-    # Move this to the seed_database file so that the database has cleaned data to generate tweets
-    # use this to check date of last fetch on Tweets too 
-    for word in old_line_arr:
-
-        # remove retweets and mentions, links, and random symbols
-        if word != 'RT' and word != '"RT' and '@' not in word \
-                    and 'http' not in word \
-                    and 'www' not in word \
-                    and '.com' not in word \
-                    and word != ':' and word != '!' and word != '-' \
-                    and 'amp;' not in word:
-            
-            # remove trailing period 
-            if len(word) > 1:
-                if word[-1] == '.':
-                    word = word[0:-1]
-                    new_line_arr.append(word)
-                else: 
-                    new_line_arr.append(word)
-
-    return (' ').join(new_line_arr)
 
 
 def markov_algo(list_twitter_accounts): 
@@ -151,7 +121,7 @@ def markov_algo(list_twitter_accounts):
         # Get and clean all of the original tweets for each selected author 
         for author_obj in author_objs:
             for tweet_obj in Original_Tweet.query.filter_by(author=author_obj).all():
-                new_tweet = clean_tweet(tweet_obj.text)
+                new_tweet = tweet_obj.text
                 markov.data(new_tweet)
 
         tweet = markov(max_length=40)

@@ -55,6 +55,35 @@ twitter_accounts = [{'name': 'Elon Musk',
                      ] 
 client = get_twitter_client()
 
+
+def clean_tweet(line):
+    """Clean a Tweet by removing retweets, mentions, links, and other random symbols"""
+
+    old_line_arr = line.split(' ')
+    new_line_arr = []
+    
+    # FIXME: This may be inefficient and slow the program. May need to refactor later
+    for word in old_line_arr:
+
+        # remove retweets and mentions, links, and random symbols
+        if word != 'RT' and word != '"RT' and '@' not in word \
+                    and 'http' not in word \
+                    and 'www' not in word \
+                    and '.com' not in word \
+                    and word != ':' and word != '!' and word != '-' \
+                    and 'amp;' not in word:
+            
+            # remove trailing period 
+            if len(word) > 1:
+                if word[-1] == '.':
+                    word = word[0:-1]
+                    new_line_arr.append(word)
+                else: 
+                    new_line_arr.append(word)
+
+    return (' ').join(new_line_arr)
+
+
 # Seed database with tweets from each above Twitter account
 for account in twitter_accounts:
     name = account['name']
@@ -63,7 +92,7 @@ for account in twitter_accounts:
     author = crud.create_author(name, twitter_handle)
 
     for status in tweepy.Cursor(client.user_timeline, screen_name=twitter_handle).items(150): # add a number inside the parenthesis of items to limit # of tweets
-        text = status.text
+        text = clean_tweet(status.text)
 
         db_musk_tweet = crud.create_original_tweet(text, author)
 
