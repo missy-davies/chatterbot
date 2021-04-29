@@ -3,6 +3,7 @@ h1 {
 	font-family: 'Noto Serif', serif;
 	font-size: 30pt;
 	color: #1DA1F2;
+	padding-bottom: 0.5em;
 }
 
 h2 {
@@ -90,6 +91,11 @@ input {
 	font-family: 'Open Sans', sans-serif;
 }
 
+/* Carousel */
+.carousel {
+	width: 570px;
+}
+
 /* Buttons */
 .btn {
 	align-items: center;
@@ -156,7 +162,7 @@ img {
 /* Tweets and Widgets */
 .widget {
 	border-radius: 30px;
-	border: 3px solid black;
+	border: 3px solid #1DA1F2;
 	width: 30em;
 	height: 35em;
 	margin: 2em;
@@ -173,12 +179,13 @@ img {
 }
 
 .botname {
+	font-size: 10pt;
 	font-weight: 1000;
 	color: #5B7083;
 }
 
-.tweet-package {
-	/* display: flex; */
+.tweet-package, .heart {
+	display: inline-block;
 }
 
 .tweets, .fav-tweets {
@@ -188,7 +195,7 @@ img {
 }
 
 .heart {
-    font-size: 16px;
+    font-size: 40px;
 	color: #aaa;
 	cursor: pointer;
 }
