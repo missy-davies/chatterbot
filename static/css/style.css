@@ -15,8 +15,7 @@ h3 {
 	font-family: 'Noto Serif', serif;
 	font-size: 20pt;
 	color: #1DA1F2;
-	padding-bottom: 1.5em;
-
+	padding-bottom: 0.5em;
 }
 
 p {
@@ -69,8 +68,15 @@ ul, li {
 
 /* Account Login Widget */
 .logo {
-	margin-top: 3em;
-	margin-bottom: 1em;
+	margin-top: 0.5em;
+	height: 70px;
+	width: 70px;
+}
+
+.big-logo {
+	height: 90px;
+	width: 90px;
+	margin-top: 2em;
 }
 
 #email, #password, #fname, #login-email, #login-password {
@@ -116,6 +122,14 @@ input {
   color: #1B91DA;
 }
 
+.logout-fav {
+	margin-top: 4.6em;
+}
+
+.generate-fav {
+	margin-top: 18.6em;
+}
+
 .favs {
 	background-color: #5B7083;
 }
@@ -135,8 +149,8 @@ img {
 	height: 45px;
 }
 
-.twitter-accounts  {
-	padding-left: 2em;
+.twitter-accounts, .fav-directions  {
+	padding-left: 5em;
 }
 
 /* Tweets and Widgets */
