@@ -3,18 +3,35 @@
 {% block title %}Favorites{% endblock %} 
 
 {% block body %}
+<!-- TODO: DELETE THIS TEST -->
+<!-- <div>
+  <div id="${tweet.id}" class="heart heart-fav">
+    &hearts;
+  </div>
+  <div class="tweet-package">
+    <div class="botname">
+      @${tweet.botname}
+    </div>
+    <div>
+      ${tweet.text}
+    </div>
+  </div>
+</div> -->
+
 <div class="container">
-  <form>
-    <button class="btn btn-light btn-sm logout" type="submit" formaction="/logout">Log Out</button>
-  </form>
-  <div class="row">
+  <div class="row align-items-center justify-content-center static-height vertical-center">
     <div class="col">
+      <img class="big-logo" src="/static/img/Logo Small.png">
+      <h3>Here are your Favorites!</h3>
       <form>
         <button class="btn btn-primary btn-sm" type="submit" formaction="/generate">Generate More Tweets</button>
       </form>
+      <form>
+        <button class="btn btn-primary btn-sm logout" type="submit" formaction="/logout">Log Out</button>
+      </form>
     </div>
     <div class="col">
-      <div class="tweet-widget">
+      <div class="widget">
         <div class="fav-tweets">
         </div>
       </div>

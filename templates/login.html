@@ -4,23 +4,24 @@
 
 {% block body%}
 <div class="container">
-  <div class="row align-items-center">
-    <div class="col">
-      <h1>They Really Said That?! Mash together celebrities and generate crazy new Tweets</h1>
+  <div class="row align-items-center justify-content-center static-height vertical-center">
+    <div class="col slogan">
+      <h1>They Really Said That?!<br>
+      Mash together celebrities and generate crazy new Tweets</h1>
     </div>
 
     <!-- Login or create an account widget  -->
-    <div class="col">
-      <div class="account-widget">
-
+    <div class="col centered">
+      <div class="widget">
+        <img class="logo" src="/static/img/Logo Small.png">
         <h2>Welcome</h2>
         <p>Sign in to generate Tweets</p>
 
         <form action="/login" method="POST">
-          <div>
+          <div class="wide">
             <input type="text" name="login-email" id="login-email" placeholder="email" required />
           </div>
-          <div>
+          <div class="wide"> 
             <input type="password" name="login-password" id="login-password"
             placeholder="password" required />
           </div>

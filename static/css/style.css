@@ -15,6 +15,8 @@ h3 {
 	font-family: 'Noto Serif', serif;
 	font-size: 20pt;
 	color: #1DA1F2;
+	padding-bottom: 1.5em;
+
 }
 
 p {
@@ -26,10 +28,27 @@ p {
 	color: #5B7083;
 	display: block;
 	width: 60%;
+	margin-left: 7em;
+}
+
+.slogan {
+	padding-left: 2em;
 }
 
 /* Footer */
-/* TODO: If content overflows, then footer covers content, it should sit below always */
+html, body {
+	height: 100%;
+	width: 100%;
+}
+
+.container {
+	height: 95%;
+}
+
+.vertical-center {
+	padding: 3em;
+}
+
 .footer > ul {
 	display: flex;
 	flex-direction: row;
@@ -49,12 +68,10 @@ ul, li {
 }
 
 /* Account Login Widget */
-.account-widget h2, .account-widget p {
-	text-align: center;
+.logo {
+	margin-top: 3em;
+	margin-bottom: 1em;
 }
-
-/* TODO: Get all items centered on login form */
-
 
 #email, #password, #fname, #login-email, #login-password {
 	margin: 3px;
@@ -68,56 +85,62 @@ input {
 }
 
 /* Buttons */
+.btn {
+	align-items: center;
+}
+
 .btn-primary {
-	color: white;
+	color: #ffffff;
 	background-color: #1DA1F2;
 	border-color: #1DA1F2;
 	border-radius:30px;
 	font-family: 'Ubuntu', sans-serif;
-	width: 200px;
+	width: 250px;
 	margin-top: 3px;
 	margin-bottom: 3px;
-	display: block;
-	width: 60%;
 }
 
 .btn-primary:hover {
   background-color: #1B91DA;
 }
 
-.favs {
+.logout {
 	background-color: #ffffff;
 	border-color: #1B91DA;
 	color: #1B91DA;
+	margin-top: 2em;
 }
 
-.favs:hover {
+.logout:hover {
   background-color: #EBF5FD;
   color: #1B91DA;
 }
 
-.btn-light {
-	border-color: #5B7083;
+.favs {
+	background-color: #5B7083;
 }
 
-.logout {
-	float: right; 
-	margin: 2.5em;
+.favs:hover {
+	background-color: #7c90a2;
 }
 
 /* Celebrity Accounts Checkboxes */
-img {
-    max-width:30%;
-    height:auto;
+.checkbox {
+	display: inline-block; 
+	font-family: 'Open Sans', sans-serif;
 }
 
-.image, .checkbox {
-	display: inline-block;
-	font-size: 15pt;
+img {
+	width: 45px;
+	height: 45px;
+}
+
+.twitter-accounts  {
+	padding-left: 2em;
 }
 
 /* Tweets and Widgets */
-.tweet-widget, .account-widget {
+.widget {
 	border-radius: 30px;
 	border: 3px solid black;
 	width: 30em;
@@ -126,7 +149,24 @@ img {
 	padding: 3em;
 }
 
-/* TODO: This isn't centered properly, but it looks ok from the sizes */
+.centered {
+	text-align: center;
+}
+
+.wide {
+	padding-left: 3.7em;
+	width: 30em; 
+}
+
+.botname {
+	font-weight: 1000;
+	color: #5B7083;
+}
+
+.tweet-package {
+	/* display: flex; */
+}
+
 .tweets, .fav-tweets {
 	overflow-y:scroll;
 	width: 25em;

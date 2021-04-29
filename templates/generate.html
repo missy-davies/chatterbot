@@ -4,19 +4,16 @@
 
 {% block body %}
 <div class="container">
-  <form>
-    <button class="btn btn-light btn-sm logout" type="submit" formaction="/logout">Log Out</button>
-  </form>
-
-  <div class="row">
+  <div class="row align-items-center justify-content-center static-height vertical-center">
     <div class="col">
       <div class="twitter-accounts">
-        <h3>Choose 1 or more accounts to generate tweets:</h3>
+        <img class="big-logo" src="/static/img/Logo Small.png">
+        <h3>Choose 1 or more accounts to<br>
+          generate tweets:</h3>
         <!-- Elon Musk -->
         <div class="elon">
-          <div class="image"><img src="/static/img/elon.png" 
+          <img src="/static/img/elon.png" 
               alt="Elon Musk's Twitter profile icon of a rocket" />
-          </div>
           <div class="checkbox">
             <input type="checkbox" id="elonmusk" name="check" value="elonmusk" checked>
             <label for="elonmusk">Elon Musk</label>
@@ -25,9 +22,8 @@
 
         <!-- Kim Kardashian -->
         <div class="kim">
-          <div class="image"><img src="/static/img/kim.png" 
+          <img src="/static/img/kim.png" 
               alt="Kim Kardashian's Twitter profile icon of a selfie" />
-          </div>
           <div class="checkbox">
             <input type="checkbox" id="kimkardashian" name="check" value="kimkardashian">
             <label for="kimkardashian">Kim Kardashian West</label>
@@ -36,9 +32,8 @@
 
         <!-- Britney Spears -->
         <div class="britney">
-          <div class="image"><img src="/static/img/britney.png" 
+          <img src="/static/img/britney.png" 
               alt="Britney Spears' Twitter profile icon of herself" />
-          </div>
           <div class="checkbox">
             <input type="checkbox" id="britneyspears" name="check" value="britneyspears">
             <label for="britneyspears">Britney Spears</label>
@@ -47,9 +42,8 @@
 
         <!-- Justin Bieber -->
         <div class="justin">
-          <div class="image"><img src="/static/img/justin.png" 
+          <img src="/static/img/justin.png" 
               alt="Justin Bieber's Twitter profile icon of himself sittin gon the floor" />
-          </div>
           <div class="checkbox">
             <input type="checkbox" id="justinbieber" name="check" value="justinbieber">
             <label for="justinbieber">Justin Bieber</label>
@@ -58,9 +52,8 @@
 
         <!-- Lady Gaga -->
         <div class="gaga">
-          <div class="image"><img src="/static/img/gaga.png" 
+          <img src="/static/img/gaga.png" 
               alt="Lady Gaga's Twitter profile icon of herself" />
-          </div>
           <div class="checkbox">
             <input type="checkbox" id="ladygaga" name="check" value="ladygaga">
             <label for="ladygaga">Lady Gaga</label>
@@ -72,14 +65,18 @@
         <form>
           <button class="btn btn-primary btn-sm favs" type="submit" formaction="/favorites">View Favorite Tweets</button>
         </form>
+
+        <form>
+          <button class="btn btn-primary btn-sm logout" type="submit" formaction="/logout">Log Out</button>
+        </form>
       </div>
     </div>
     <div class="col">
-      <div class="tweet-widget">
+      <div class="widget">
         <div class="tweets">
         </div>
       </div>
-      <p>Tip! 'like' a tweet to add it to your favorites</p>
+      <!-- <p>Tip! 'like' a tweet to add it to your favorites</p> -->
     </div>
   </div>
 </div>

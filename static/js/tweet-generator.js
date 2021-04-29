@@ -15,11 +15,11 @@ const showTweets = (apiData) => {
 	for (const tweet of apiData) {
 		if (tweet.fav_status == true) {
 			$('.tweets, .fav-tweets').prepend(
-				`<p><span id="${tweet.id}" class="heart heart-fav">&hearts;</span>@${tweet.botname} ${tweet.text}</p>`
+				`<div><div id="${tweet.id}" class="heart heart-fav">&hearts;</div><div class="tweet-package"><div class="botname">@${tweet.botname}</div><div>${tweet.text}</div></div></div>`
 			);
 		} else {
 			$('.tweets').prepend(
-				`<p><span id="${tweet.id}" class="heart">&hearts;</span>@${tweet.botname} ${tweet.text}</p>`
+				`<div><div id="${tweet.id}" class="heart">&hearts;</div><div class="tweet-package"><div class="botname">@${tweet.botname}</div><div>${tweet.text}</div></div></div>`
 			);
 		}
 	}
