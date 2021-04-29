@@ -3,16 +3,42 @@
 {% block title %}Favorites{% endblock %} 
 
 {% block body %}
-<form>
-  <button class="button" type="submit" formaction="/logout">Log Out</button>
-</form>
+<!-- TODO: DELETE THIS TEST -->
+<!-- <div>
+  <div id="${tweet.id}" class="heart heart-fav">
+    &hearts;
+  </div>
+  <div class="tweet-package">
+    <div class="botname">
+      @${tweet.botname}
+    </div>
+    <div>
+      ${tweet.text}
+    </div>
+  </div>
+</div> -->
 
-<div class="fav-tweets">
+<div class="container">
+  <div class="row align-items-center justify-content-center static-height vertical-center">
+    <div class="col">
+      <div class="fav-directions">
+        <img class="logo" src="/static/img/Logo Small.png">
+        <h3>Here are your Favorites!</h3>
+        <form>
+          <button class="btn btn-primary btn-sm generate-fav" type="submit" formaction="/generate">Generate More Tweets</button>
+        </form>
+        <form>
+          <button class="btn btn-primary btn-sm logout logout-fav" type="submit" formaction="/logout">Log Out</button>
+        </form>
+      </div>
+    </div>
+    <div class="col">
+      <div class="widget">
+        <div class="fav-tweets">
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
-<form>
-  <button class="button" type="submit" formaction="/generate">Generate More Tweets</button>
-</form>
-
 
 {% endblock %}

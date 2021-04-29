@@ -1,51 +1,217 @@
-footer {
-	position: absolute;
-	bottom: 0;
-	width: 100%;
-	height: 2.5rem;
-	padding-bottom: 0.5rem;
+/* Text  */
+h1 {
+	font-family: 'Noto Serif', serif;
+	font-size: 30pt;
+	color: #1DA1F2;
+	padding-bottom: 0.5em;
 }
 
-.account-widget {
+h2 {
+	font-family: 'Noto Serif', serif;
+	font-size: 20pt;
+	color: #1DA1F2;
+}
+
+h3 {
+	font-family: 'Noto Serif', serif;
+	font-size: 20pt;
+	color: #1DA1F2;
+	padding-bottom: 0.5em;
+}
+
+p {
+	font-family: 'Open Sans', sans-serif;
+}
+
+.session-terms {
+	font-size: 8pt;
+	color: #5B7083;
+	display: block;
+	width: 60%;
+	margin-left: 7em;
+}
+
+.slogan {
+	padding-left: 2em;
+}
+
+.flash-msg {
+	position: absolute;
+	padding: 10px;
 	border-radius: 3px;
-	border: 3px solid black;
-	width: 20em;
-	height: 25em;
+	font-size: 12pt;
+	margin: 20px;
+	border: 2px solid #1DA1F2;
+	background-color: #EBF5FD;
+	color: black;
+}
+
+/* Footer */
+html, body {
+	height: 100%;
+	width: 100%;
+}
+
+.container {
+	height: 95%;
+}
+
+.vertical-center {
+	padding: 3em;
+}
+
+.footer > ul {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	height: 2rem;
+}
+
+ul, li {
+	display: inline;
+	padding-left: 15px;
+	padding-right: 15px;
+	font-size: 10pt;
+	font-family: 'Open Sans', sans-serif;
+}
+
+/* Account Login Widget */
+.logo {
+	margin-top: 0.5em;
+	height: 70px;
+	width: 70px;
+}
+
+.big-logo {
+	height: 90px;
+	width: 90px;
+	margin-top: 2em;
+}
+
+#email, #password, #fname, #login-email, #login-password {
+	margin: 3px;
+	display: block;
+	width: 60%;
+}
+
+input {
+	text-indent: 10px;
+	font-family: 'Open Sans', sans-serif;
+}
+
+/* Carousel */
+.carousel {
+	width: 570px;
+}
+
+/* Buttons */
+.btn {
+	align-items: center;
+}
+
+.btn-primary {
+	color: #ffffff;
+	background-color: #1DA1F2;
+	border-color: #1DA1F2;
+	border-radius:30px;
+	font-family: 'Ubuntu', sans-serif;
+	width: 250px;
+	margin-top: 3px;
+	margin-bottom: 3px;
+}
+
+.btn-primary:hover {
+  background-color: #1B91DA;
+}
+
+.logout {
+	background-color: #ffffff;
+	border-color: #1B91DA;
+	color: #1B91DA;
+	margin-top: 2em;
+}
+
+.logout:hover {
+  background-color: #EBF5FD;
+  color: #1B91DA;
+}
+
+.logout-fav {
+	margin-top: 4.6em;
+}
+
+.generate-fav {
+	margin-top: 18.6em;
+}
+
+.favs {
+	background-color: #5B7083;
+}
+
+.favs:hover {
+	background-color: #7c90a2;
+}
+
+/* Celebrity Accounts Checkboxes */
+.checkbox {
+	display: inline-block; 
+	font-family: 'Open Sans', sans-serif;
+}
+
+img {
+	width: 45px;
+	height: 45px;
+}
+
+.twitter-accounts, .fav-directions  {
+	padding-left: 5em;
+}
+
+/* Tweets and Widgets */
+.widget {
+	border-radius: 30px;
+	border: 3px solid #1DA1F2;
+	width: 30em;
+	height: 35em;
 	margin: 2em;
-	padding: 1em;
+	padding: 3em;
+	background-color: #EBF5FD;
+}
+
+.centered {
+	text-align: center;
+}
+
+.wide {
+	padding-left: 3.7em;
+	width: 30em; 
+}
+
+.botname {
+	font-size: 10pt;
+	font-weight: 1000;
+	color: #5B7083;
+}
+
+.tweet-package, .heart {
 	display: inline-block;
 }
 
-.tweets {
-	border-radius: 3px;
-	border: 3px solid black;
-	width: 20em;
-	height: 20em;
-	margin: 2em;
-	padding: 1em;
+.tweets, .fav-tweets {
 	overflow-y:scroll;
-}
-
-.fav-tweets {
-	border-radius: 3px;
-	border: 3px solid black;
-	width: 20em;
-	height: 20em;
-	margin: 2em;
-	padding: 1em;
-	overflow-y: scroll;
+	width: 25em;
+	height: 30em;
 }
 
 .heart {
-    font-size: 16px;
+    font-size: 40px;
 	color: #aaa;
 	cursor: pointer;
 }
 
 .heart-fav {
 	color: #E0245E;
-}
-
-.button {
-	cursor: pointer;
 }

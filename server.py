@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, flash, session, redirect, jso
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 import jinja2
 
-from model import db, connect_to_db, User, Musk_Tweet, UG_Tweet
+from model import db, connect_to_db, User, Original_Tweet, UG_Tweet, Author
 import crud
 
 from markovchain.text import MarkovText
@@ -20,6 +20,8 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
+
+#################| Login Routes |#################
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -48,20 +50,26 @@ def create_account():
 
     user = crud.get_user_by_email(email)
     if user:
-        flash('Oops, looks like an account already exists with that email! Please log in.')
+        flash('Oops, looks like an account already exists with that email! Please log in 🙏')
         return redirect('/login')
+    elif '@' not in email and len(password) < 7:
+        flash('Please enter a valid email address and ensure your password is at least 7 characters long 🔒')
+        return redirect('/')
+    elif '@' not in email:
+        flash('Please enter a valid email address 💌')
+        return redirect('/')
+    elif len(password) < 7:
+        flash('Password must be at least 7 characters long 🔒')
+        return redirect('/')
     else:
         crud.create_user(fname, email, password)
-        flash("Hooray, you successfully signed up for an account! Please log in")
+        flash("Hooray, you successfully signed up for an account! Please log in 🎉")
         return redirect('/login')
 
 
 @app.route('/login')
 def show_login():
     """Display landing page with login to existing account details"""
-    
-    # TODO: Add email and password criteria to ensure email is real and 
-    # password meets requirements 
 
     if current_user.is_authenticated:
         return redirect('/generate')
@@ -77,17 +85,19 @@ def login():
     password = request.form['login-password']
 
     if user == None:
-        flash('''Oops, we couldn't find an account under that email address. 
-                Please create a new account and try again!''')
+        flash('''Oops, we couldn't find an account under that email address.
+                Please create a new account and try again! 👾''')
         return redirect('/')
     elif password != user.password:
-        flash('Incorrect password. Please try again.')
+        flash('Wrong password, please try again 😁')
         return redirect('/login')
     else:
-        flash(f'Logged in as {user.fname}!')
+        flash(f'Welcome, {user.fname}!')
         login_user(user)
         return redirect('/generate')
 
+
+#################| Routes Using Markov Library |#################
 
 @app.route('/generate')
 @login_required
@@ -97,55 +107,72 @@ def show_tweet_generator():
     return render_template('generate.html')
 
 
-def clean_tweet(line):
-    """Clean a Tweet by removing retweets, mentions, links, and other random symbols"""
+def markov_algo(list_twitter_accounts): 
+    """Use Markov library to create and return a string based given twitter account(s)"""
 
-    old_line_arr = line.split(' ')
-    new_line_arr = []
-    
-    # FIXME: This may be inefficient and slow the program. May need to refactor later
-    # Move this to the seed_database file so that the database has cleaned data to generate tweets
-    # use this to check date of last fetch on Tweets too 
-    for word in old_line_arr:
+    if len(list_twitter_accounts) != 0:
+        markov = MarkovText() 
 
-        # remove retweets and mentions, links, and random symbols
-        if word != 'RT' and word != '"RT' and '@' not in word \
-                    and word[0:4] != 'http' \
-                    and 'www' not in word \
-                    and '.com' not in word \
-                    and word != ':' and word != '!' and word != '-' \
-                    and 'amp;' not in word:
-            
-            # remove trailing period 
-            if len(word) > 1:
-                if word[-1] == '.':
-                    word = word[0:-1]
-                    new_line_arr.append(word)
-                else: 
-                    new_line_arr.append(word)
+        # Create list of author objects by iterating through given list of selected twitter accounts
+        author_objs = []
+        for index, twitter_account in enumerate(list_twitter_accounts):
+            author_objs.append(Author.query.filter_by(twitter_handle=list_twitter_accounts[index]).one())
 
-    return (' ').join(new_line_arr)
+        # Get and clean all of the original tweets for each selected author 
+        for author_obj in author_objs:
+            for tweet_obj in Original_Tweet.query.filter_by(author=author_obj).all():
+                new_tweet = tweet_obj.text
+                markov.data(new_tweet)
+
+        tweet = markov(max_length=40)
+        # there are 6.1 chars on average in a word, Twitter's char limit is 280, 
+        # so that makes for approx 45 words max in a tweet, rounding down to 40 for some margin
+        
+        tweet_obj = crud.create_ug_tweet(user=current_user, fav_status=False, 
+                                         text=tweet, authors=author_objs, botname=crud.make_bot_username(author_objs))
+        
+        return jsonify({'id': tweet_obj.ug_tweet_id, 'text': tweet_obj.text, 'botname': tweet_obj.botname})
+    else:
+        return ValueError('No Twitter accounts selected') 
+
+
+def str_to_bool(string_val):
+    """Take in a string of 'true' or 'false' and convert to Python boolean"""
+
+    if string_val[0] == 'f':
+        return False
+    elif string_val[0] == 't':
+        return True 
 
 
 @app.route('/markov')
 @login_required
 def generate_markov():
     """Generate markov tweet using stored Tweets in database"""
+    
+    selected_twitter_people = [
+        {'handle': 'elonmusk',
+        'status': str_to_bool(request.args.get('elonmusk'))},
+        {'handle': 'kimkardashian',
+        'status': str_to_bool(request.args.get('kimkardashian'))},
+        {'handle': 'britneyspears',
+        'status': str_to_bool(request.args.get('britneyspears'))},
+        {'handle': 'justinbieber',
+        'status': str_to_bool(request.args.get('justinbieber'))},
+        {'handle': 'ladygaga',
+        'status': str_to_bool(request.args.get('ladygaga'))}
+        ]
 
-    markov = MarkovText() 
+    accounts = []
 
-    for tweet_obj in Musk_Tweet.query.all():
-        new_tweet = clean_tweet(tweet_obj.text)
-        markov.data(new_tweet)
+    for person in selected_twitter_people:
+        if person['status'] == True:
+            accounts.append(person['handle'])
 
-    tweet = markov(max_length=40)
-    # there are 6.1 chars on average in a word, Twitter's char limit is 280, 
-    # so that makes for approx 45 words max in a tweet, rounding down to 40 for some margin
+    return markov_algo(accounts)
 
-    tweet_obj = crud.create_ug_tweet(user=current_user, fav_status=False, text=tweet)
 
-    return jsonify({'id': tweet_obj.ug_tweet_id, 'text': tweet_obj.text})
-
+#################| Routes to Display Tweets |#################
 
 @app.route('/get-tweets')
 @login_required
@@ -158,7 +185,8 @@ def get_ug_tweets():
 
         tweets_text.append({'id': tweet.ug_tweet_id, 
                             'text': tweet.text,
-                            'fav_status': tweet.fav_status}) 
+                            'fav_status': tweet.fav_status,
+                            'botname': tweet.botname}) 
 
     return jsonify(sorted(tweets_text, key = lambda i: i['id']))
 
@@ -171,7 +199,7 @@ def show_favorites():
     return render_template('favorites.html')
 
 
-@app.route('/toggle-fav.json', methods=['POST']) 
+@app.route('/toggle-fav', methods=['POST']) 
 @login_required
 def toggle_fav():
     """Toggle favorite status of a tweet"""
@@ -181,8 +209,10 @@ def toggle_fav():
     clicked_tweet.fav_status = False if clicked_tweet.fav_status else True
     db.session.commit()
 
-    return redirect('/generate') # TODO: Is this the right thing to return here? 
+    return redirect('/generate') # TODO: Can also just remove return all together 
 
+
+#################| Logout & Error Handler Routes |#################
 
 @app.route('/logout')
 @login_required

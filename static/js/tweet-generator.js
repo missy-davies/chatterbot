@@ -6,7 +6,7 @@ const toggleHeart = () => {
 	$('.heart').click(function () {
 		$(this).toggleClass('heart-fav');
 
-		$.post('/toggle-fav.json', { id: this.id });
+		$.post('/toggle-fav', { id: this.id });
 	});
 };
 
@@ -15,11 +15,11 @@ const showTweets = (apiData) => {
 	for (const tweet of apiData) {
 		if (tweet.fav_status == true) {
 			$('.tweets, .fav-tweets').prepend(
-				`<p><span id="${tweet.id}" class="heart heart-fav">&hearts;</span>${tweet.text}</p>`
+				`<div><div id="${tweet.id}" class="heart heart-fav">&hearts;</div><div class="tweet-package"><div class="botname">@${tweet.botname}</div><div>${tweet.text}</div></div></div>`
 			);
 		} else {
 			$('.tweets').prepend(
-				`<p><span id="${tweet.id}" class="heart">&hearts;</span>${tweet.text}</p>`
+				`<div><div id="${tweet.id}" class="heart">&hearts;</div><div class="tweet-package"><div class="botname">@${tweet.botname}</div><div>${tweet.text}</div></div></div>`
 			);
 		}
 	}
@@ -35,10 +35,32 @@ const refreshTweets = () => {
 refreshTweets();
 
 // On click, generate a new tweet and fully refresh the page of tweets
+// Pass in the selected twitter accounts as data
 $('#generate-tweet').on('click', (evt) => {
 	evt.preventDefault();
 
-	$.get('/markov', function () {
-		refreshTweets();
-	});
+	// Only send request if at least one Twitter account is selected
+	if (
+		!$('#kimkardashian').is(':checked') &&
+		!$('#elonmusk').is(':checked') &&
+		!$('#britneyspears').is(':checked') &&
+		!$('#justinbieber').is(':checked') &&
+		!$('#ladygaga').is(':checked')
+	) {
+		swal('Oops, please select at least one Twitter account 🙏');
+	} else {
+		let data = {
+			kimkardashian: $('#kimkardashian').is(':checked'),
+			elonmusk: $('#elonmusk').is(':checked'),
+			britneyspears: $('#britneyspears').is(':checked'),
+			justinbieber: $('#justinbieber').is(':checked'),
+			ladygaga: $('#ladygaga').is(':checked'),
+		};
+
+		$.get('/markov', data, function (res) {
+			if (res != null) {
+				refreshTweets();
+			}
+		});
+	}
 });

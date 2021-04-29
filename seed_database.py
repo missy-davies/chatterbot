@@ -19,7 +19,7 @@ model.connect_to_db(server.app)
 model.db.create_all()
 
 
-# Seed database with Tweets using a Twitter API call with the Tweepy wrapper
+# Set up to use Twitter API with the Tweepy wrapper
 def twitter_auth():
     """Authenticate Twitter API connection with secret keys"""
 
@@ -42,17 +42,63 @@ def get_twitter_client():
     return client 
 
 
-# TODO: Change Twitter account and number of tweets to seed database 
-twitter_user = 'elonmusk' 
+twitter_accounts = [{'name': 'Elon Musk',
+                     'twitter_handle': 'elonmusk'},
+                    {'name': 'Britney Spears',
+                    'twitter_handle': 'britneyspears'},
+                    {'name': 'Justin Bieber',
+                    'twitter_handle': 'justinbieber'},
+                    {'name': 'Kim Kardashian West',
+                     'twitter_handle': 'kimkardashian'},
+                    {'name': 'Lady Gaga',
+                    'twitter_handle': 'ladygaga'}
+                     ] 
 client = get_twitter_client()
 
-for status in tweepy.Cursor(client.user_timeline, screen_name=twitter_user).items(150): # add a number inside the parenthesis of items to limit # of tweets
-    text = status.text
 
-    db_musk_tweet = crud.create_musk_tweet(text)
+def clean_tweet(line):
+    """Clean a Tweet by removing retweets, mentions, links, and other random symbols"""
+
+    old_line_arr = line.split(' ')
+    new_line_arr = []
+    
+    # FIXME: This may be inefficient and slow the program. May need to refactor later
+    for word in old_line_arr:
+
+        # remove retweets and mentions, links, and random symbols
+        if word != 'RT' and word != '"RT' and '@' not in word \
+                    and 'http' not in word \
+                    and 'www' not in word \
+                    and '.com' not in word \
+                    and word != ':' and word != '!' and word != '-' \
+                    and 'amp;' not in word:
+            
+            # remove trailing period 
+            if len(word) > 1:
+                if word[-1] == '.':
+                    word = word[0:-1]
+                    new_line_arr.append(word)
+                else: 
+                    new_line_arr.append(word)
+
+    return (' ').join(new_line_arr)
 
 
-# Random names and words to create users and demo texts out of
+# Seed database with tweets from each above Twitter account
+for account in twitter_accounts:
+    name = account['name']
+    twitter_handle = account['twitter_handle']
+
+    author = crud.create_author(name, twitter_handle)
+
+    for status in tweepy.Cursor(client.user_timeline, screen_name=twitter_handle).items(150): # add a number inside the parenthesis of items to limit # of tweets
+        text = clean_tweet(status.text)
+
+        db_musk_tweet = crud.create_original_tweet(text, author)
+
+
+# TODO: Remove fake users, maybe seed with demo user 
+# Random names to create users
 names = ['Aurora', 'Beatrice','Claudia','Domiziana', 'Eva',
          'Francesca','Giovanna', 'Helena', 'Ilaria', 'Jessica']
 
@@ -61,4 +107,3 @@ for name in names:
     password = f'supersafe{name.lower()[0]}{names.index(name)}'
 
     user = crud.create_user(name, email, password)
-
