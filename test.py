@@ -162,24 +162,24 @@ class APITest(TestCase):
         db.engine.dispose()
 
 
-    # def test_markov(self):
-    #     """Test generating a markov tweet"""
+  # def test_markov(self):
+  #     """Test generating a markov tweet"""
 
-    #     result = self.client.get('/markov')
-    #     self.assertEqual(result.status_code, 200)
-    #     data = json.loads(result.get_data(as_text=True))
+  #     result = self.client.get('/markov')
+  #     self.assertEqual(result.status_code, 200)
+  #     data = json.loads(result.get_data(as_text=True))
 
-    #     self.assertEqual(data['id'], 1)
+  #     self.assertEqual(data['id'], 1)
 
 
-    # def test_get_tweets(self):
-    #     """Test getting all generated tweets"""
+  # def test_get_tweets(self):
+  #     """Test getting all generated tweets"""
 
-    #     result = self.client.get('/get-tweets')
-    #     self.assertEqual(result.status_code, 200)
-    #     data = json.loads(result.get_data(as_text=True))
-    
-    #     self.assertEqual(data[0]['id'], 1)
+  #     result = self.client.get('/get-tweets')
+  #     self.assertEqual(result.status_code, 200)
+  #     data = json.loads(result.get_data(as_text=True))
+
+  #     self.assertEqual(data[0]['id'], 1)
 
 
 #------------------------------------------------------------------#
