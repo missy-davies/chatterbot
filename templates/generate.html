@@ -5,13 +5,13 @@
 {% block body %}
 <div class="container">
   <div class="row align-items-center justify-content-center static-height vertical-center">
-    <div class="col">
+    <div class="col half">
       <div class="twitter-accounts">
         <img class="logo" src="/static/img/Logo Small.png">
         <h3>Choose 1 or more accounts to<br>
-          generate tweets:</h3>
+          generate Tweets:</h3>
         <!-- Elon Musk -->
-        <div class="elon">
+        <div class="celeb">
           <img src="/static/img/elon.png" 
               alt="Elon Musk's Twitter profile icon of a rocket" />
           <div class="checkbox">
@@ -21,7 +21,7 @@
         </div>
 
         <!-- Kim Kardashian -->
-        <div class="kim">
+        <div class="celeb">
           <img src="/static/img/kim.png" 
               alt="Kim Kardashian's Twitter profile icon of a selfie" />
           <div class="checkbox">
@@ -31,7 +31,7 @@
         </div>
 
         <!-- Britney Spears -->
-        <div class="britney">
+        <div class="celeb">
           <img src="/static/img/britney.png" 
               alt="Britney Spears' Twitter profile icon of herself" />
           <div class="checkbox">
@@ -41,7 +41,7 @@
         </div>
 
         <!-- Justin Bieber -->
-        <div class="justin">
+        <div class="celeb">
           <img src="/static/img/justin.png" 
               alt="Justin Bieber's Twitter profile icon of himself sittin gon the floor" />
           <div class="checkbox">
@@ -51,7 +51,7 @@
         </div>
 
         <!-- Lady Gaga -->
-        <div class="gaga">
+        <div class="celeb">
           <img src="/static/img/gaga.png" 
               alt="Lady Gaga's Twitter profile icon of herself" />
           <div class="checkbox">
@@ -63,7 +63,7 @@
         <button class="btn btn-primary btn-sm" id="generate-tweet" type="submit">Generate Tweet</button>
 
         <form>
-          <button class="btn btn-primary btn-sm favs" type="submit" formaction="/favorites">View Favorite Tweets</button>
+          <button class="btn btn-primary btn-sm favs" type="submit" formaction="/favorites">View Favorites</button>
         </form>
 
         <form>
@@ -71,12 +71,11 @@
         </form>
       </div>
     </div>
-    <div class="col">
+    <div class="col centered">
       <div class="widget">
         <div class="tweets">
         </div>
       </div>
-      <!-- <p>Tip! 'like' a tweet to add it to your favorites</p> -->
     </div>
   </div>
 </div>

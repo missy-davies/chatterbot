@@ -21,7 +21,9 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 
-#################| Login Routes |#################
+####################################################################
+#                          Login Routes                            #
+####################################################################
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -92,12 +94,14 @@ def login():
         flash('Wrong password, please try again 😁')
         return redirect('/login')
     else:
-        flash(f'Welcome, {user.fname}!')
+        flash(f'Welcome, {user.fname}! 🦄')
         login_user(user)
         return redirect('/generate')
 
 
-#################| Routes Using Markov Library |#################
+####################################################################
+#                   Routes Using Markov Library                    #
+####################################################################
 
 @app.route('/generate')
 @login_required
@@ -172,7 +176,9 @@ def generate_markov():
     return markov_algo(accounts)
 
 
-#################| Routes to Display Tweets |#################
+####################################################################
+#                     Routes to Display Tweets                     #
+####################################################################
 
 @app.route('/get-tweets')
 @login_required
@@ -209,10 +215,12 @@ def toggle_fav():
     clicked_tweet.fav_status = False if clicked_tweet.fav_status else True
     db.session.commit()
 
-    return redirect('/generate') # TODO: Can also just remove return all together 
+    return redirect('/generate') 
 
 
-#################| Logout & Error Handler Routes |#################
+####################################################################
+#                  Logout & Error Handler Routes                   #
+####################################################################
 
 @app.route('/logout')
 @login_required
@@ -221,7 +229,7 @@ def logout():
 
     logout_user()
 
-    flash(f'See you later!')
+    flash(f'Ciao for now! 👋')
     return redirect('/login')
 
 
