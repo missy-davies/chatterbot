@@ -1,8 +1,14 @@
-## Project Proposal
+# ChatterBot
 
 ### Overview
 
-An app where users can generate psueudo Tweets from Elon Musk's Twitter profile using the concept of Markov chains.
+ChatterBot is a web app that allows users to generate parody Tweets based 
+on celebrity Twitter accounts using a Markov chain algorithm. Users can select
+1-5 celebs from a pre populated list to mash together the voices of multiple 
+personalities for more fun. Users can also "like" any Tweet to add it to their 
+'Favorites'. 
+
+ChatterBot is built with a Flask along with HTML/CSS and deployed using Heroku. 
 
 ### Technologies required (besides typical Hackbright tech stack)
 
