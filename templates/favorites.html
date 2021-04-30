@@ -9,7 +9,7 @@
     <div class="col">
       <div class="fav-directions">
         <img class="logo" src="/static/img/Logo Small.png">
-        <h3>Here are your Favorites!</h3>
+        <h3>My Favorite Tweets</h3>
         <form>
           <button class="btn btn-primary btn-sm generate-fav" type="submit" formaction="/generate">Generate More Tweets</button>
         </form>
@@ -20,6 +20,11 @@
     </div>
     <div class="col centered">
       <div class="widget">
+        {% if no_favs %}
+          <h3 class="tour-tip text-align-center" id="tour-fav">'like' a Tweet<br>
+                                                               to add it to your<br>
+                                                               Favorites</h3>
+        {% endif %}
         <div class="fav-tweets">
         </div>
       </div>

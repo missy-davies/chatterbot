@@ -8,8 +8,8 @@
     <div class="col">
       <div class="twitter-accounts">
         <img class="logo" src="/static/img/Logo Small.png">
-        <h3>Choose 1 or more accounts to<br>
-          generate Tweets:</h3>
+        <h3>Choose 1+ accounts to remix<br>
+          & generate new Tweets:</h3>
         <!-- Elon Musk -->
         <div class="celeb">
           <img src="/static/img/elon.png" 
@@ -63,7 +63,7 @@
         <button class="btn btn-primary btn-sm" id="generate-tweet" type="submit">Generate Tweet</button>
 
         <form>
-          <button class="btn btn-primary btn-sm favs" type="submit" formaction="/favorites">View Favorites</button>
+          <button class="btn btn-primary btn-sm favs" type="submit" formaction="/favorites">View My Favorites</button>
         </form>
 
         <form>
@@ -73,6 +73,11 @@
     </div>
     <div class="col centered">
       <div class="widget">
+        {% if no_tweets %}
+          <h3 class="tour-tip text-align-center">Click<br>
+                                                 'Generate Tweet'<br>
+                                                 to get Started</h3>
+        {% endif %}
         <div class="tweets">
         </div>
       </div>

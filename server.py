@@ -94,7 +94,8 @@ def login():
         flash('Wrong password, please try again 😁')
         return redirect('/login')
     else:
-        flash(f'Welcome, {user.fname}! 🦄')
+        greeting = user.fname.capitalize()
+        flash(f'Welcome to ChatterBot, {greeting}! 🦄')
         login_user(user)
         return redirect('/generate')
 
@@ -102,14 +103,6 @@ def login():
 ####################################################################
 #                   Routes Using Markov Library                    #
 ####################################################################
-
-@app.route('/generate')
-@login_required
-def show_tweet_generator():
-    """Show tweet generator page and generate new tweets"""
-
-    return render_template('generate.html')
-
 
 def markov_algo(list_twitter_accounts): 
     """Use Markov library to create and return a string based given twitter account(s)"""
@@ -197,12 +190,31 @@ def get_ug_tweets():
     return jsonify(sorted(tweets_text, key = lambda i: i['id']))
 
 
+@app.route('/generate')
+@login_required
+def show_tweet_generator():
+    """Show tweet generator page and generate new tweets"""
+    tweets = current_user.tweets
+    no_tweets = True
+    if len(tweets) != 0:
+        no_tweets = False
+
+    return render_template('generate.html', no_tweets=no_tweets)
+
+
 @app.route('/favorites')
 @login_required
 def show_favorites():
     """Display favorite generated tweets"""
 
-    return render_template('favorites.html')
+    tweets = current_user.tweets
+    no_favs = True
+    for tweet in tweets:
+        if tweet.fav_status == True:
+            no_favs = False
+            break
+
+    return render_template('favorites.html', no_favs=no_favs)
 
 
 @app.route('/toggle-fav', methods=['POST']) 

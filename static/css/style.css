@@ -19,6 +19,25 @@ h3 {
 	padding-bottom: 0.5em;
 }
 
+.tour-tip {
+	font-size: 25pt;
+	color: #dde2e6;
+	padding-top: 5em;
+	padding-left: 1.75em;
+	position: absolute;
+	z-index: 900;
+}
+
+#tour-fav {
+	padding-left: 2em;
+}
+
+h4 {
+	font-family: 'Noto Serif', serif;
+	font-size: 11pt;
+	color: #1DA1F2;
+}
+
 p {
 	font-family: 'Open Sans', sans-serif;
 }
@@ -69,6 +88,7 @@ html, body {
 	width: 100%;
 	height: 2rem;
 	background: #ffffff;
+	z-index: 1000;
 }
 
 .about-info li {
@@ -212,6 +232,7 @@ img {
 
 .tweet-package {
 	margin-top: 0.75em;
+	z-index: 950;
 }
 
 .centered {
@@ -243,6 +264,7 @@ img {
     font-size: 40px; 
 	color: #aaa;
 	cursor: pointer;
+	z-index: 1000;
 }
 
 .heart:hover {

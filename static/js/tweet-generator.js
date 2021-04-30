@@ -66,3 +66,8 @@ $('#generate-tweet').on('click', (evt) => {
 		});
 	}
 });
+
+// Set Flask Flashed messages to fade out after 10 seconds
+setTimeout(function () {
+	$('.flash-msg').fadeOut('slow');
+}, 10000);
