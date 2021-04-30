@@ -56,13 +56,20 @@ p {
 
 .flash-msg {
 	position: absolute;
+	max-width: 300px;
+	height: auto;
 	padding: 10px;
 	border-radius: 3px;
 	font-size: 12pt;
 	margin: 20px;
-	border: 2px solid #1DA1F2;
-	background-color: #EBF5FD;
+	border: 2px solid #bbd2ab;
+	background-color: #e4e8e2;
 	color: black;
+}
+
+.error {
+	background-color: #F6F4D2;
+	border-color: #E4DF77;
 }
 
 /* Footer */

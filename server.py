@@ -52,16 +52,16 @@ def create_account():
 
     user = crud.get_user_by_email(email)
     if user:
-        flash('Oops, looks like an account already exists with that email! Please log in 🙏')
+        flash(u'Oops, looks like an account already exists with that email! Please log in 🙏', 'error')
         return redirect('/login')
     elif '@' not in email and len(password) < 7:
-        flash('Please enter a valid email address and ensure your password is at least 7 characters long 🔒')
+        flash(u'Please enter a valid email address and ensure your password is at least 7 characters long 🔒', 'error')
         return redirect('/')
     elif '@' not in email:
-        flash('Please enter a valid email address 💌')
+        flash(u'Please enter a valid email address 💌', 'error')
         return redirect('/')
     elif len(password) < 7:
-        flash('Password must be at least 7 characters long 🔒')
+        flash(u'Password must be at least 7 characters long 🔒', 'error')
         return redirect('/')
     else:
         crud.create_user(fname, email, password)
@@ -87,11 +87,11 @@ def login():
     password = request.form['login-password']
 
     if user == None:
-        flash('''Oops, we couldn't find an account under that email address.
-                Please create a new account and try again! 👾''')
+        flash(u'''Oops, we couldn't find an account under that email address.
+                Please create a new account and try again! 👾''', 'error')
         return redirect('/')
     elif password != user.password:
-        flash('Wrong password, please try again 😁')
+        flash(u'Wrong password, please try again 😁', 'error')
         return redirect('/login')
     else:
         greeting = user.fname.capitalize()
@@ -241,7 +241,7 @@ def logout():
 
     logout_user()
 
-    flash(f'Ciao for now! 👋')
+    flash('Ciao for now! 👋')
     return redirect('/login')
 
 
