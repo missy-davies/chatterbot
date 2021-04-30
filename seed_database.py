@@ -91,7 +91,7 @@ for account in twitter_accounts:
 
     author = crud.create_author(name, twitter_handle)
 
-    for status in tweepy.Cursor(client.user_timeline, screen_name=twitter_handle).items(150): # add a number inside the parenthesis of items to limit # of tweets
+    for status in tweepy.Cursor(client.user_timeline, screen_name=twitter_handle).items(500): # add a number inside the parenthesis of items to limit # of tweets
         text = clean_tweet(status.text)
 
         db_musk_tweet = crud.create_original_tweet(text, author)
