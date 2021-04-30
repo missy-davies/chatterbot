@@ -97,13 +97,15 @@ for account in twitter_accounts:
         db_musk_tweet = crud.create_original_tweet(text, author)
 
 
-# TODO: Remove fake users, maybe seed with demo user 
-# Random names to create users
-names = ['Aurora', 'Beatrice','Claudia','Domiziana', 'Eva',
-         'Francesca','Giovanna', 'Helena', 'Ilaria', 'Jessica']
+# Random names to create users and seed database
+# names = ['Aurora', 'Beatrice','Claudia','Domiziana', 'Eva',
+#          'Francesca','Giovanna', 'Helena', 'Ilaria', 'Jessica']
 
-for name in names:
-    email = f'{name.lower()}@libero.it'
-    password = f'supersafe{name.lower()[0]}{names.index(name)}'
+# for name in names:
+#     email = f'{name.lower()}@libero.it'
+#     password = f'supersafe{name.lower()[0]}{names.index(name)}'
 
-    user = crud.create_user(name, email, password)
+#     user = crud.create_user(name, email, password)
+
+# Demo User
+crud.create_user('Missy', 'demo@gmail.com', 'demo123')

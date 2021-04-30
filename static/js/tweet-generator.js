@@ -47,7 +47,9 @@ $('#generate-tweet').on('click', (evt) => {
 		!$('#justinbieber').is(':checked') &&
 		!$('#ladygaga').is(':checked')
 	) {
-		swal('Oops, please select at least one Twitter account 🙏');
+		swal(
+			'Hold your horses! 🦄🐴 \n Please select at least 1 Twitter account.'
+		);
 	} else {
 		let data = {
 			kimkardashian: $('#kimkardashian').is(':checked'),
