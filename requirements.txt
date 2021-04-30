@@ -41,7 +41,6 @@ mccabe==0.6.1
 multidict==5.1.0
 netifaces==0.10.4
 oauthlib==3.1.0
-PAM==0.4.2
 psycopg2==2.8.6
 psycopg2-binary==2.8.6
 pyasn1==0.4.2
