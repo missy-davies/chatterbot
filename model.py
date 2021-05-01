@@ -2,6 +2,7 @@
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+import os
 
 db = SQLAlchemy()
 
@@ -119,7 +120,7 @@ class Author(db.Model):
         return f'<Author author_id={self.author_id} name={self.name} twitter_handle={self.twitter_handle}>'
 
 
-def connect_to_db(flask_app, db_uri='postgresql:///tweetgenerator', echo=True):
+def connect_to_db(flask_app, db_uri=os.environ.get("DATABASE_URL"), echo=True):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     flask_app.config['SQLALCHEMY_ECHO'] = echo
     flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
