@@ -51,7 +51,7 @@ Database:
 APIs:
 - Twitter API 
 
-### How To Use 
+## How To Use 
 To download and use ChatterBot please follow these instructions:
 1. In your terminal, `git clone` this repository 
 2. `cd chatterbot`
@@ -69,7 +69,7 @@ in the above step. Each line should read:
 9. Next, run `python3 seed_database.py`
 10. Finally, launch the server with `python3 server.py`
 
-#### Coming Soon...
+## Coming Soon...
 A few ideas of features to add in the future: 
 - Allow users to search for any public Twitter rather than from pre-populated list 
 - Login in / [create account with Twitter](https://developer.twitter.com/en/docs/authentication/overview)
