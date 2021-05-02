@@ -22,7 +22,7 @@ with a Markov chain algorithm. Selecting more than 1 celeb creates a mashup Twee
 ![Generate Tweets](/static/img/generate-tweets.gif)
 
 #### Favorite Tweets
-Users can favorite parody Tweets by clicking the heart 
+Users can favorite parody Tweets by clicking the heart.
 ![Favorite Tweets](/static/img/favorite-tweets.gif)
 
 #### Manage Favorite Tweets 
@@ -63,7 +63,8 @@ To download and use ChatterBot please follow these instructions:
 SECRET_KEY, ACCESS_TOKEN, and ACCESS_TOKEN_SECRET.
 7. Create a new file in the chatterbot directory called secrets.sh and paste your 
 Twitter keys. It should look something like this: 
-![Secrets Example](secrets.png)
+
+![Secrets Example](/static/img/secrets.png)
 8. Back in your terminal, run `source secrets.sh` 
 9. Next, run `python3 seed_database.py`
 10. Finally, launch the server with `python3 server.py`
