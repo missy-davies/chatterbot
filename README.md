@@ -29,7 +29,7 @@ Users can favorite parody Tweets by clicking the heart.
 Users can view and manage their Favorite tweets.
 ![View Favorite Tweets](/static/img/view-favorites.gif)
 
-### Technologies
+## Technologies
 Languages:
 - Python 3
 - JavaScript (AJAX, JSON)
