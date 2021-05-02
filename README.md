@@ -6,7 +6,7 @@ on celebrity Twitter accounts using a Markov chain algorithm. Users can select
 personalities for more fun. Users can also "like" any Tweet to add it to their 
 'Favorites'. 
 
-ChatterBot is built with Python Flask on the backend with a PostgrSQL database,
+ChatterBot is built with Python Flask on the backend with a PostgreSQL database,
 and Javascript/jQuery on the frontend along with HTML/CSS and Bootstrap. 
 
 ## Features 
@@ -50,6 +50,23 @@ Database:
 
 APIs:
 - Twitter API 
+
+### How To Use 
+To download and use ChatterBot please follow these instructions:
+1. In your terminal, `git clone` this repository 
+2. `cd chatterbot`
+3. Create virtual environment with `virtualenv env`
+4. Activate the virtual environment with `source env/bin/activate`
+6. `pip3 install -r requirements.txt`
+7. Sign up for an account with [Twitter Developers](https://developer.twitter.com/en)
+8. Create a new app to obtain your secret tokens and keys. You'll need a CONSUMER_KEY, 
+SECRET_KEY, ACCESS_TOKEN, and ACCESS_TOKEN_SECRET.
+7. Create a new file in the chatterbot directory called secrets.sh and paste your 
+Twitter keys. It should look something like this: 
+![Secrets Example](secrets.png)
+8. Back in your terminal, run `source secrets.sh` 
+9. Next, run `python3 seed_database.py`
+10. Finally, launch the server with `python3 server.py`
 
 #### Coming Soon...
 A few ideas of features to add in the future: 
