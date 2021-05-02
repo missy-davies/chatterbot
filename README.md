@@ -1,66 +1,59 @@
 # ChatterBot
-
-### Overview
-
+## Overview
 ChatterBot is a web app that allows users to generate parody Tweets based 
 on celebrity Twitter accounts using a Markov chain algorithm. Users can select
 1-5 celebs from a pre populated list to mash together the voices of multiple 
 personalities for more fun. Users can also "like" any Tweet to add it to their 
 'Favorites'. 
 
-ChatterBot is built with a Flask along with HTML/CSS and deployed using Heroku. 
+ChatterBot is built with Python Flask on the backend with a PostgrSQL database,
+and Javascript/jQuery on the frontend along with HTML/CSS and Bootstrap. 
 
-### Technologies required (besides typical Hackbright tech stack)
+## Features 
+#### Create Account / Login 
+Users can create / login to an account using the homepage widget.
+![Create Account and Login](/static/img/create-account.gif)
 
-- Twitter API
-- [Tweepy library](https://www.tweepy.org/) (make using Twitter API easy)
-- [Markov Chain library](https://github.com/dead-beef/markovchain) (hard lifting of Markov chain work is done here)
-- [Demoji library](https://pypi.org/project/demoji/) (clean strings and remove emojis, characters, and otherwise)
+#### Generate Tweets 
+Users can select any number of celebrities from the provided list - then click 
+'Generate' and a new Tweet will appear. Tweets are created by mixing together 
+hundreds of original Tweets from the chosen celebrities' real Twitter accounts 
+with a Markov chain algorithm. Selecting more than 1 celeb creates a mashup Tweet. 
+![Generate Tweets](/static/img/generate-tweets.gif)
 
-### APIs
-- [Twitter offers an API](https://developer.twitter.com/en/portal/products) where you can make:
-    - 900 request / 15 min PER USER AUTH
-    - 300 request / 15 min PER APP AUTH
-- I will query that to pull a public user's tweets.
-- I will also use the [Tweepy](https://www.tweepy.org/) library to help facilitate using the Twitter API.
-- Website digram and user flow ideas [here](https://miro.com/app/board/o9J_lNxBVfs=/)
+#### Favorite Tweets
+Users can favorite parody Tweets by clicking the heart 
+![Favorite Tweets](/static/img/favorite-tweets.gif)
 
-### Data
-Drafting data model [here](https://dbdiagram.io/d/60622ab3ecb54e10c33dd1f7)
+#### Manage Favorite Tweets 
+Users can view and manage their Favorite tweets.
+![View Favorite Tweets](/static/img/view-favorites.gif)
 
-User Data:
-- Name
-- Email 
-- Password
-- Favorite Tweets
+### Technologies
+Languages:
+- Python 3
+- JavaScript (AJAX, JSON)
+- HTML
+- CSS
 
-Twitter Data (temporarily store the original tweets, need to expire old chain):
-- store Tweets for a select few famous folks (Musk to start), will need to query to get all Tweets then have it maintained every month or so
-    - need 280 character string output
-- Favorited generated tweets by user
+Frameworks & Libraries:
+- Flask
+- Flask-Login
+- Jinja
+- jQuery
+- Bootstrap 
+- Tweepy'
+- Markov Chain
 
-### Flow Diagram
-Drafting [here](https://miro.com/app/board/o9J_lNxBVfs=/)
+Database:
+ - PostgreSQL / SQLAlchemy
 
-### Roadmap
+APIs:
+- Twitter API 
 
-#### MVP
-
-A Markov tweet generator that pulls all tweets from Elon Musk's profile (to start) then parses the info into a string, and generate a 280 character pseudo tweet.
-
-Users can create and log into accouts to save generated Tweets to their 'favorites'. 
-
-#### 2.0
-
-- Make the UI really nice, minimal but beautiful using Bootstrap
-- Add a second option to create pseudo tweets (Kim Kardashian)
-- Allow option to mosh together 2 pre-querried Twitter accounts
-
-#### 3.0
-
-- Allow users to search for any public Twitter 
+#### Coming Soon...
+A few ideas of features to add in the future: 
+- Allow users to search for any public Twitter rather than from pre-populated list 
 - Login in / [create account with Twitter](https://developer.twitter.com/en/docs/authentication/overview)
-- Allow users to select second pre-filled funky text to create mashup generated tweet
 - Ability to download favorited Tweets in a CSV file 
 - Allow users to auto-publish tweets 
-- Add tour tips? 
