@@ -62,9 +62,9 @@ To download and use ChatterBot please follow these instructions:
 8. Create a new app to obtain your secret tokens and keys. You'll need a CONSUMER_KEY, 
 SECRET_KEY, ACCESS_TOKEN, and ACCESS_TOKEN_SECRET.
 7. Create a new file in the chatterbot directory called secrets.sh and paste your 
-Twitter keys. It should look something like this: 
-
-![Secrets Example](/static/img/secrets.png)
+Twitter keys. You should add one key per line and it should follow the names listed
+in the above step. Each line should read:
+`export KEY_NAME="yoursecretkeygoeshere"` 
 8. Back in your terminal, run `source secrets.sh` 
 9. Next, run `python3 seed_database.py`
 10. Finally, launch the server with `python3 server.py`
