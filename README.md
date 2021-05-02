@@ -42,7 +42,7 @@ Frameworks & Libraries:
 - Jinja
 - jQuery
 - Bootstrap 
-- Tweepy'
+- Tweepy
 - Markov Chain
 
 Database:
