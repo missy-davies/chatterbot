@@ -9,6 +9,8 @@ personalities for more fun. Users can also "like" any Tweet to add it to their
 ChatterBot is built with Python Flask on the backend with a PostgreSQL database,
 and Javascript/jQuery on the frontend along with HTML/CSS and Bootstrap. 
 
+Please see [this video for a full walkthrough](https://www.youtube.com/watch?v=g4hTnQE1P5Y). 
+
 ## Features 
 #### Create Account / Login 
 Users can create / login to an account using the homepage widget.
