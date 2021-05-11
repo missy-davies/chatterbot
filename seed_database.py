@@ -12,8 +12,8 @@ import server
 
 import tweepy 
 
-os.system('dropdb tweetgenerator')
-os.system('createdb tweetgenerator')
+os.system(f'dropdb {os.environ['DATABASE_NAME']}')
+os.system(f'createdb {os.environ['DATABASE_NAME']}')
 
 model.connect_to_db(server.app)
 model.db.create_all()
