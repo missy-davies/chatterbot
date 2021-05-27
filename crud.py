@@ -1,6 +1,10 @@
 """CRUD operations"""
 
-from model import db, User, Original_Tweet, UG_Tweet, Author, connect_to_db
+from models.model import db, connect_to_db
+from models.User import User
+from models.UG_Tweet import UG_Tweet
+from models.Author import Author 
+from models.Original_Tweet import Original_Tweet 
 
 def create_user(fname, email, password):
     """Create and return a new user"""

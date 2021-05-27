@@ -7,16 +7,16 @@ import requests
 from random import choice
 
 import crud
-import model
 import server 
+import models.model
 
 import tweepy 
 
-os.system(f'dropdb {os.environ['DATABASE_NAME']}')
-os.system(f'createdb {os.environ['DATABASE_NAME']}')
+os.system(f'dropdb tweetgenerator')
+os.system(f'createdb tweetgenerator')
 
-model.connect_to_db(server.app)
-model.db.create_all()
+models.model.connect_to_db(server.app)
+models.model.db.create_all()
 
 
 # Set up to use Twitter API with the Tweepy wrapper
@@ -91,7 +91,7 @@ for account in twitter_accounts:
 
     author = crud.create_author(name, twitter_handle)
 
-    for status in tweepy.Cursor(client.user_timeline, screen_name=twitter_handle).items(500): # add a number inside the parenthesis of items to limit # of tweets
+    for status in tweepy.Cursor(client.user_timeline, screen_name=twitter_handle).items(20): # add a number inside the parenthesis of items to limit # of tweets
         text = clean_tweet(status.text)
 
         db_musk_tweet = crud.create_original_tweet(text, author)
