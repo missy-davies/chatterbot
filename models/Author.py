@@ -4,6 +4,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from models.model import db
 from models.association import link_ug_tweet_authors
+# from models.UG_Tweet import UG_Tweet
 
 class Author(db.Model):
     """A user on Twitter who authors tweets"""

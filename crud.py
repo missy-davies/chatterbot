@@ -1,10 +1,14 @@
 """CRUD operations"""
 
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+
 from models.model import db, connect_to_db
 from models.User import User
 from models.UG_Tweet import UG_Tweet
 from models.Author import Author 
 from models.Original_Tweet import Original_Tweet 
+from models.association import link_ug_tweet_authors
 
 def create_user(fname, email, password):
     """Create and return a new user"""

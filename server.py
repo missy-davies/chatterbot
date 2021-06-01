@@ -8,9 +8,10 @@ from models.model import db, connect_to_db
 from models.User import User 
 from models.UG_Tweet import UG_Tweet 
 from models.Author import Author 
-from models.Original_Tweet import Original_Tweet 
+from models.Original_Tweet import Original_Tweet
+from models.association import link_ug_tweet_authors
 import crud
-
+ 
 from markovchain.text import MarkovText
 
 import os
