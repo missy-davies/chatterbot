@@ -1,9 +1,14 @@
 """Script to test Flask routes and server"""
 
 from unittest import TestCase
+
+from flask import Flask, render_template, request, flash, session, redirect, jsonify
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+import jinja2
 from server import app
-from flask import session
+
 import crud
+
 from models.model import db, connect_to_db
 from models.User import User
 from models.UG_Tweet import UG_Tweet
@@ -64,36 +69,32 @@ class FlaskTestsBasic(TestCase):
         app.config['TESTING'] = False
 
 
-    def test_create_account(self):
-        """Test displaying create account homepage"""
+    def test_displaying_create_account_homepage(self):
 
         result = self.client.get('/')
         self.assertEqual(result.status_code, 200)
         self.assertIn(b'Sign up to generate Tweets', result.data)
 
 
-    def test_login(self):
-        """Test displaying login to existing account homepage"""
+    def test_displaying_existing_login_homepage(self):
 
         result = self.client.get('/login')
         self.assertEqual(result.status_code, 200)
         self.assertIn(b'Sign in to generate Tweets', result.data)
 
 
-    def test_generate(self):
-        """Test displaying generate page"""
-
-        result = self.client.get('/generate')
-        self.assertEqual(result.status_code, 200)
-        self.assertIn(b'generate tweets', result.data)
+    # def test_displaying_generate_page(self):
+      
+    #     result = self.client.get('/generate')
+    #     self.assertEqual(result.status_code, 200)
+    #     self.assertIn(b'Generate Tweets', result.data)
    
    
-    def test_favorites(self):
-        """Test displaying favorites page"""
+    # def test_displaying_favorites_page(self):
 
-        result = self.client.get('/favorites')
-        self.assertEqual(result.status_code, 200)
-        self.assertIn(b'<div class="fav-tweets">', result.data)
+    #     result = self.client.get('/favorites')
+    #     self.assertEqual(result.status_code, 200)
+    #     self.assertIn(b'<div class="fav-tweets">', result.data)
 
 
 class FlaskTestsDatabaseLoggedIn(TestCase):
@@ -121,7 +122,6 @@ class FlaskTestsDatabaseLoggedIn(TestCase):
 
 
     def test_create_account_post(self):
-        """Test getting client data on create account homepage"""
 
         result = self.client.post('/',
                                   data={'fname': 'Domiziana', 
@@ -132,13 +132,12 @@ class FlaskTestsDatabaseLoggedIn(TestCase):
 
 
     def test_login_post(self):
-        """Test getting client data on login homepage"""
 
         result = self.client.post('/login',
                                   data={'login-email': 'aurora@libero.it', 
                                         'login-password': 'test1'},
                                   follow_redirects=True)
-        self.assertIn(b'Logged in as', result.data)
+        self.assertIn(b'Welcome to ChatterBot', result.data)
 
 
 class APITest(TestCase):
@@ -168,24 +167,22 @@ class APITest(TestCase):
         db.engine.dispose()
 
 
-  # def test_markov(self):
-  #     """Test generating a markov tweet"""
+    # def test_generating_markov_tweet(self):
 
-  #     result = self.client.get('/markov')
-  #     self.assertEqual(result.status_code, 200)
-  #     data = json.loads(result.get_data(as_text=True))
+    #     result = self.client.get('/markov')
+    #     self.assertEqual(result.status_code, 200)
+    #     data = json.loads(result.get_data(as_text=True))
 
-  #     self.assertEqual(data['id'], 1)
+    #     self.assertEqual(data['id'], 1)
 
 
-  # def test_get_tweets(self):
-  #     """Test getting all generated tweets"""
+    # def test_getting_generated_tweets(self):
 
-  #     result = self.client.get('/get-tweets')
-  #     self.assertEqual(result.status_code, 200)
-  #     data = json.loads(result.get_data(as_text=True))
+    #     result = self.client.get('/get-tweets')
+    #     self.assertEqual(result.status_code, 200)
+    #     data = json.loads(result.get_data(as_text=True))
 
-  #     self.assertEqual(data[0]['id'], 1)
+    #     self.assertEqual(data[0]['id'], 1)
 
 
 #------------------------------------------------------------------#
